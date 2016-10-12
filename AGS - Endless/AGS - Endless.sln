@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGS - Endless.CSharp.Plugins", "AGS - Endless.CSharp.Plugins.csproj", "{B63EBA28-3450-BBC4-32E3-67F7DCE99A24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGS - Endless.CSharp", "AGS - Endless.CSharp.csproj", "{82222B5B-E436-EBB7-443A-3A758BD3A7C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGS - Endless.CSharp.Editor", "AGS - Endless.CSharp.Editor.csproj", "{48B446E1-6A7E-5AEE-F941-4DCE673273A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B63EBA28-3450-BBC4-32E3-67F7DCE99A24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B63EBA28-3450-BBC4-32E3-67F7DCE99A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B63EBA28-3450-BBC4-32E3-67F7DCE99A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B63EBA28-3450-BBC4-32E3-67F7DCE99A24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82222B5B-E436-EBB7-443A-3A758BD3A7C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82222B5B-E436-EBB7-443A-3A758BD3A7C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82222B5B-E436-EBB7-443A-3A758BD3A7C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82222B5B-E436-EBB7-443A-3A758BD3A7C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48B446E1-6A7E-5AEE-F941-4DCE673273A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48B446E1-6A7E-5AEE-F941-4DCE673273A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48B446E1-6A7E-5AEE-F941-4DCE673273A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48B446E1-6A7E-5AEE-F941-4DCE673273A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
