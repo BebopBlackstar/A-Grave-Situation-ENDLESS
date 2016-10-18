@@ -1,27 +1,59 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Xml.Serialization;
+using System.IO;
 
-[SerializeField]
+
+//[SerializeField]
+[System.Serializable()]
+public class saves
+{
+    private int m_saveSlots = 3;
+    public List<playerStats> saveslots;
+    public saves()
+    {
+        saveslots = new List<playerStats>(m_saveSlots);
+        saveslots.Add(new playerStats("jeffry"));
+        saveslots.Add(new playerStats("bob"));
+        saveslots.Add(new playerStats("redneck"));
+    }  
+}
 public class playerStats
 {
-    public int saveSlots = 3;
-    //public Button[] UI_saveSlots;
-    float[] Save_money = {0, 0, 0};
-    int[] Save_Level = {0, 0, 0};
+    public string name;
+    public int moneh;
+    public int lvl;
+    public playerStats()
+    {
+
+    }
+    public playerStats(string _name)
+    {
+        name = _name;
+    }
 }
 
-public class MenuSystem : MonoBehaviour {
+public class MenuSystem : MonoBehaviour
+{
 
     [SerializeField]
     public bool testExperiment = false; //Will it save infomation during runtime?
     public Scene scenes;
     public int Checktest = 3;
     int num_loadGame = 0;
-    
+    int levelCount = 0;
+    saves stats; 
+    public int moneyCurrent = 2000;
+
     void Start()
-    { /*GetComponent<MenuSystem>().GetComponent<playerStats>().UI_saveSlots;*/ }
+    {
+        stats = new saves();
+        stats.saveslots[0] = new playerStats("super jeffry");
+        //quit();
+    }
 
     public void newGame() //load up the first level for training
     {
@@ -36,17 +68,42 @@ public class MenuSystem : MonoBehaviour {
     { }
 
     public void loadGame()
-    {    }
+    { }
+
+    //public void nextLevel(SerializationInfo info, StreamingContext ctxt)
+    //{
+    //    info.AddValue("GameSlot: ", (num_loadGame));
+    //    //info.AddValue("foundGem1", (foundGem1));
+    //    info.AddValue("SaveMoney: ", moneyCurrent);
+    //    info.AddValue("CurrentLevel: ", levelCount);
+    //}
 
     public void leaderboards()
-    {    }
+    { }
 
     public void options()
-    {    }
+    { }
 
     public void credits()
-    {    }
+    { }
 
     public void quit()
-    {    }
+    {
+        {//SAVE GAME
+            System.Type type = typeof(saves);           
+            XmlSerializer serilizer = new XmlSerializer(type);
+            StreamWriter writer = new StreamWriter("C:/Users/michael.gackle/Documents/A-Grave-Situation-ENDLESS/thing");
+            Debug.Log("Writing Information");
+            serilizer.Serialize(writer, stats);
+            writer.Close();
+        }//SAVE GAME
+         //SceneManager.UnloadScene(0);
+        Debug.Log("Quit");
+        //Application.Quit();
+        //SceneManager.UnloadScene(levelCount+1);
+        //Application.EditorApplication.isPlaying = false;
+        Application.Quit();
+       
+
+    }
 }

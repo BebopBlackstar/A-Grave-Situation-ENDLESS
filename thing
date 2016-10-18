@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<saves xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <saveslots>
+    <playerStats>
+      <name>super jeffry</name>
+      <moneh>0</moneh>
+      <lvl>0</lvl>
+    </playerStats>
+    <playerStats>
+      <name>bob</name>
+      <moneh>0</moneh>
+      <lvl>0</lvl>
+    </playerStats>
+    <playerStats>
+      <name>redneck</name>
+      <moneh>0</moneh>
+      <lvl>0</lvl>
+    </playerStats>
+  </saveslots>
+</saves>
