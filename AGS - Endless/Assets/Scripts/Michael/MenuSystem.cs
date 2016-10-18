@@ -14,6 +14,8 @@ public class playerStats
 
 public class MenuSystem : MonoBehaviour {
 
+    [SerializeField]
+    public bool testExperiment = false; //Will it save infomation during runtime?
     public Scene scenes;
     public int Checktest = 3;
     int num_loadGame = 0;
