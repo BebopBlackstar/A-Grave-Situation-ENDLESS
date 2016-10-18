@@ -1,0 +1,13 @@
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.dll
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_bin\Debug\UnityEditor.dll
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_bin\Debug\UnityEngine.dll
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_bin\Debug\UnityEngine.Networking.dll
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_bin\Debug\UnityEngine.UI.dll
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_bin\Debug\UnityEngine.xml
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_bin\Debug\UnityEngine.Networking.xml
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_bin\Debug\UnityEditor.xml
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_obj\Debug\AGS - Endless.CSharp.Plugins.csprojResolveAssemblyReference.cache
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_obj\Debug\Assembly-CSharp-firstpass.dll
+C:\Users\Talscar\Documents\A-Grave-Situation-ENDLESS\AGS - Endless\Temp\UnityVS_obj\Debug\Assembly-CSharp-firstpass.pdb
