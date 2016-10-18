@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/Title_screen.unity
+=======
+- path: Assets/Adjusted Prototype.unity
+>>>>>>> parent of 4fae5d6... My custom level
   isLoaded: 1
   isActive: 1
