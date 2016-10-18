@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Adjusted Prototype.unity
+- path: Assets/Scenes/Title_screen.unity
   isLoaded: 1
   isActive: 1
