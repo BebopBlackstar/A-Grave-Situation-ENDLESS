@@ -1,4 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Title_screen.unity
+- path: C:/Users/cameron.oborn/Documents/Side-Project/BodySnatcher Level Proto 0.0.0.1/Assets/Scenes/Basic
+    idea.unity
   isLoaded: 1
   isActive: 1
