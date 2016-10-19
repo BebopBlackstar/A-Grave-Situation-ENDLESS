@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 m_EditorVersion: 5.3.2f1
+=======
+m_EditorVersion: 5.4.0f3
+>>>>>>> parent of f622b70... New tools which are in development(Not usable). They don't effect gameplay, due to not utilising Mono scripting.
 m_StandardAssetsVersion: 0
