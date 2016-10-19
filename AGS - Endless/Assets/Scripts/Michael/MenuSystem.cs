@@ -7,7 +7,6 @@ using System.Xml.Serialization;
 using System.IO;
 
 
-
 //[SerializeField]
 [System.Serializable()]
 public class saves
@@ -17,31 +16,24 @@ public class saves
     public saves()
     {
         saveslots = new List<playerStats>(m_saveSlots);
-        saveslots.Add(new playerStats("Player1"));
-        saveslots.Add(new playerStats("Player2"));
-        saveslots.Add(new playerStats("Player3"));
-    }
+        saveslots.Add(new playerStats("jeffry"));
+        saveslots.Add(new playerStats("bob"));
+        saveslots.Add(new playerStats("redneck"));
+    }  
 }
 public class playerStats
 {
     public string name;
     public int moneh;
     public int lvl;
-
     public playerStats()
     {
 
-    }
-    public playerStats(int moneyCurrent)
-    {
-        moneh = moneyCurrent;
     }
     public playerStats(string _name)
     {
         name = _name;
     }
-
-    
 }
 
 public class MenuSystem : MonoBehaviour
@@ -53,21 +45,24 @@ public class MenuSystem : MonoBehaviour
     public int Checktest = 3;
     int num_loadGame = 0;
     int levelCount = 0;
-    saves stats;
+    saves stats; 
     public int moneyCurrent = 2000;
-    public string myName = "Default";
 
     void Start()
     {
         stats = new saves();
+<<<<<<< HEAD
 //       stats.saveslots[0] = new playerStats("super jeffry");
         stats.saveslots[0].moneh = moneyCurrent;
+=======
+        stats.saveslots[0] = new playerStats("super jeffry");
+>>>>>>> parent of 63483ef... All Better player1-3 stuff and other stuff... Not sure what's in this commit, it requested it.
         //quit();
     }
 
     public void newGame() //load up the first level for training
     {
-        stats.saveslots[0] = new playerStats(myName);
+
         SceneManager.LoadScene(1);
     }
 
@@ -100,9 +95,9 @@ public class MenuSystem : MonoBehaviour
     public void quit()
     {
         {//SAVE GAME
-            System.Type type = typeof(saves);
+            System.Type type = typeof(saves);           
             XmlSerializer serilizer = new XmlSerializer(type);
-            StreamWriter writer = new StreamWriter("C:/Users/michael.gackle/Documents/A-Grave-Situation-ENDLESS/ProfileInfomation");
+            StreamWriter writer = new StreamWriter("C:/Users/michael.gackle/Documents/A-Grave-Situation-ENDLESS/thing");
             Debug.Log("Writing Information");
             serilizer.Serialize(writer, stats);
             writer.Close();
@@ -113,7 +108,7 @@ public class MenuSystem : MonoBehaviour
         //SceneManager.UnloadScene(levelCount+1);
         //Application.EditorApplication.isPlaying = false;
         Application.Quit();
-
+       
 
     }
 }

@@ -1,5 +1,17 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: C:/Users/cameron.oborn/Documents/Side-Project/BodySnatcher Level Proto 0.0.0.1/Assets/Scenes/Basic
     idea.unity
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+- path: Assets/Scenes/Title_screen.unity
+=======
+- path: Assets/Adjusted Prototype.unity
+>>>>>>> parent of 4fae5d6... My custom level
+=======
+- path: Assets/Scenes/Level2.unity
+>>>>>>> master
+>>>>>>> parent of 63483ef... All Better player1-3 stuff and other stuff... Not sure what's in this commit, it requested it.
   isLoaded: 1
   isActive: 1
