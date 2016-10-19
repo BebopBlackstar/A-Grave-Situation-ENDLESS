@@ -60,7 +60,7 @@ public class MenuSystem : MonoBehaviour
     void Start()
     {
         stats = new saves();
-        stats.saveslots[0] = new playerStats("super jeffry");
+//       stats.saveslots[0] = new playerStats("super jeffry");
         stats.saveslots[0].moneh = moneyCurrent;
         //quit();
     }
