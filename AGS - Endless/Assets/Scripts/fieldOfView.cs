@@ -35,7 +35,7 @@ public class fieldOfView : MonoBehaviour
                     {
                         GetComponentInParent<MoveToNewIntersection>().FoundEmptyGrave(target.gameObject);
                     }
-                    else
+                    else if (target.GetComponent<Seeable>().Seen() && target.tag == "Player")
                     {
                         GetComponentInParent<MoveToNewIntersection>().FoundPlayer();
                     }
@@ -77,7 +77,7 @@ public class fieldOfView : MonoBehaviour
     {
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, dir, out hit, viewRadius, walls))
+        if (Physics.Raycast(transform.position, dir, out hit, viewRadius, ~walls))
         {
             return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
         }

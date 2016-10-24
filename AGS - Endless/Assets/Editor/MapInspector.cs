@@ -77,6 +77,7 @@ public class MapInspector : Editor
                 {
                     GameObject clone = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
                     clone.transform.SetParent(empty.transform);
+                    clone.layer = LayerMask.NameToLayer("Walls");
                     clone.transform.position = new Vector3(go.position.x, go.position.y + clone.transform.localScale.y / 2, go.position.z);
 
                 }
