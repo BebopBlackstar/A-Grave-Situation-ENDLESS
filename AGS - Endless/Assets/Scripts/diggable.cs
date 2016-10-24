@@ -37,7 +37,7 @@ public class diggable : Seeable
             {
                 Debug.Log("well the grave is perfect");
                 complete = true;
-                Input.GetAxis("Jump"); //works for some reason dunno why
+                Input.GetAxis("breakthatshit"); //works for some reason dunno why
             }
             else
             {

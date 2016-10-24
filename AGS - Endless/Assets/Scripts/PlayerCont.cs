@@ -73,10 +73,7 @@ public class PlayerCont : Seeable
         moveDirection = m_camera.TransformDirection(moveDirection);
         moveDirection.y *= 0;
         movement = moveDirection.normalized * moveSpeed;
-        if (Input.GetAxis("Horizontal") != 0)
-        {
-            deactiveGuard.SetActive(true);
-        }
+
         if (triggerObject != null)
             TriggerHandle();
     }
