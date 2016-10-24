@@ -77,7 +77,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\FieldOfViewEditor.cs" />
-    <Compile Include="Assets\Scripts\Michael\LevelBuild_Tool.cs" />
+    <Compile Include="Assets\Scripts\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\Michael\MenuSystem.cs" />
     <Compile Include="Assets\Scripts\MoveToNewIntersection.cs" />
     <Compile Include="Assets\Scripts\PlayerCont.cs" />
@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\fieldOfView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Editor\How to use.txt" />
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />

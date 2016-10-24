@@ -1,0 +1,14 @@
+1. Create empty at (0,0,0) or use prefab is avaliable (map)
+2. set size and generate map 
+3. select tiles by clicking or holding alt and moving the mouse over tiles
+4. press ctrl+g to group selection into an empty object
+5. set the tag of the empty to "Path"
+6. select the map and press generate walls
+7. delete and set up graves, bake navmesh, place everything and you are done!
+
+notes:
+regenerating the map will reset all progrogress inside the map empty
+generating walls will make more walls, delete the previous wall empty first
+first two need to be in the Prefabs folder
+the prefabs need to be named "Base" for the map and "Wall" for the walls Capitals nessesary
+keep the base as a 1x1 tile otherwise overlap will happen, if need other size ask the programmer, he will fix your issue(same with the walls)
