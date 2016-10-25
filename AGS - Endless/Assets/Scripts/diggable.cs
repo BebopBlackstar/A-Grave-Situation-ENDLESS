@@ -6,21 +6,20 @@ public class diggable : Seeable
     public Transform graveTop;
     public float digSpeed;
     public float dropDistance = 3;
-    public float value;
+    public int value;
+    public int Low = 1;
+    public int High = 10;
     private float completion;
     public float percentComplete;
     private bool complete = false;
     public bool collected = false;
-    private bool unpressed = false;
     private GameObject player;
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        if (value == 0)
-        {
-            value = Random.Range(10, 100);
-        }
+        value = Random.Range(Low, High);
+
     }
     public IEnumerator dig()
     {
@@ -35,9 +34,8 @@ public class diggable : Seeable
             }
             else if (completion >= dropDistance)
             {
-                Debug.Log("well the grave is perfect");
                 complete = true;
-                Input.GetAxis("breakthatshit"); //works for some reason dunno why
+                Input.GetAxis("breakthatshit");
             }
             else
             {
@@ -45,15 +43,14 @@ public class diggable : Seeable
                 graveTop.position = new Vector3(graveTop.position.x, graveTop.position.y - digSpeed, graveTop.position.z);
                 percentComplete = Mathf.Floor(completion / dropDistance * 100);
             }
-         
+
             yield return null;
         }
     }
     public override bool Seen()
     {
         if (percentComplete > 30 && !alreadySeen)
-        {
-            alreadySeen = true;
+        {            
             return true;
         }
         return false;

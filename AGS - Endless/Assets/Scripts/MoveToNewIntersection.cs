@@ -15,6 +15,7 @@ public class MoveToNewIntersection : MonoBehaviour
     private float normalMoveSpeed;
     public float foundGraveSearchRadius;
     private int currentPath;
+    public Pathing currentPathing;
     private List<Transform> m_searchMarkers = new List<Transform>();
     private int searchPath;
     void Start()
@@ -24,6 +25,7 @@ public class MoveToNewIntersection : MonoBehaviour
         m_fieldOfView = GetComponent<fieldOfView>();
         m_markers = markers.ToList();
         m_markers.RemoveAt(0);
+        currentPathing = new follow(m_agent);
         normalMoveSpeed = m_agent.speed;
     }
     float calculatePathLength(Vector3 startPos, Vector3 endPos)
@@ -68,7 +70,7 @@ public class MoveToNewIntersection : MonoBehaviour
         }
         m_agent.destination = closest;
     }
-    void followPath()
+    public void followPath()
     {
         if (m_searchMarkers.Count > 0)
         {
@@ -125,12 +127,17 @@ public class MoveToNewIntersection : MonoBehaviour
     {
         m_agent.speed = findMoveSpeed;
         foreach (var point in m_markers)
-        {
             if (Vector3.Distance(transform.position, point.position) <= foundGraveSearchRadius)
-            {
                 m_searchMarkers.Add(point.transform);
-            }
-        }
+
+    }
+    IEnumerator StayAtCoin(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        coin current = currentPathing as coin;
+        Destroy(current.m_coin.gameObject);
+        currentPathing = new follow(m_agent);
+        currentPathing.followPath();
     }
     public void FoundPlayer()
     {
@@ -139,20 +146,56 @@ public class MoveToNewIntersection : MonoBehaviour
         m_agent.angularSpeed = 500;
         m_agent.acceleration = 500;
     }
-    // Update is called once per frame
+    public void FoundCoin(Transform coin)
+    {
+        m_agent.destination = coin.position;
+        currentPathing = new coin(m_agent, coin);
+        StartCoroutine(StayAtCoin(5));
+    }
     void Update()
     {
-        Debug.Log("mkay");
-
-        m_fieldOfView.FindPlayer();
+        m_fieldOfView.Find();
         m_fieldOfView.DrawFieldOfView();
-        Debug.DrawLine(m_agent.GetComponent<Transform>().position, m_agent.destination);
+        currentPathing.followPath();
+    }
+}
+public class Pathing
+{
+
+    protected NavMeshAgent m_agent;
+    public Pathing(NavMeshAgent agent)
+    {
+        m_agent = agent;
+    }
+    public virtual void followPath()
+    {
+        m_agent.GetComponent<MoveToNewIntersection>().followPath();
+    }
+}
+public class follow : Pathing
+{
+
+    public follow(NavMeshAgent agent) : base(agent)
+    {
+
+    }
+    public override void followPath()
+    {
         if (m_agent.remainingDistance < 1)
         {
-            followPath(); //will follow path 1 through n
-            //newPath(); //will path directly to player quieckest way
-            //newWeightedPath(); //will go towards player if further away(not functioning)
+            base.followPath();
         }
-
+    }
+}
+public class coin : Pathing
+{
+    public Transform m_coin;
+    public coin(NavMeshAgent agent, Transform _coin) : base(agent)
+    {
+        m_coin = _coin;
+    }
+    public override void followPath()
+    {
+        m_agent.destination = m_coin.position;
     }
 }

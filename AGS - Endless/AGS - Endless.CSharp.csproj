@@ -82,7 +82,6 @@
     <Compile Include="Assets\Scripts\MoveToNewIntersection.cs" />
     <Compile Include="Assets\Scripts\PlayerCont.cs" />
     <Compile Include="Assets\Scripts\Seeable.cs" />
-    <Compile Include="Assets\Scripts\digComletionDisplay.cs" />
     <Compile Include="Assets\Scripts\diggable.cs" />
     <Compile Include="Assets\Scripts\fieldOfView.cs" />
     <Compile Include="Assets\Scripts\graveText.cs" />

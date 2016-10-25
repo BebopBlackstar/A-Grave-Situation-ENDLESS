@@ -22,7 +22,7 @@ public class fieldOfView : MonoBehaviour
         viewMeshFilter.mesh = viewMesh;
 
     }
-    public void FindPlayer()
+    public void Find()
     {
 
         var Targets = Physics.OverlapSphere(transform.position, viewRadius);
@@ -31,14 +31,22 @@ public class fieldOfView : MonoBehaviour
             Vector3 dirToTarget = (target.transform.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
             {
+                var guard = GetComponentInParent<MoveToNewIntersection>();
                 if (target.GetComponent<Seeable>() != null)
-                    if (target.GetComponent<Seeable>().Seen() && target.tag != "Player" && Physics.Raycast(new Ray(transform.position, dirToTarget), graveSeeDistance, walls))
+                    if (target.GetComponent<Seeable>().Seen() && target.tag == "diggable" && Physics.Raycast(new Ray(transform.position, dirToTarget), graveSeeDistance, walls))
                     {
-                        GetComponentInParent<MoveToNewIntersection>().FoundEmptyGrave(target.gameObject);
+                        target.GetComponent<Seeable>().alreadySeen = true;
+                        guard.FoundEmptyGrave(target.gameObject);
                     }
                     else if (target.GetComponent<Seeable>().Seen() && target.tag == "Player")
                     {
-                        GetComponentInParent<MoveToNewIntersection>().FoundPlayer();
+                        target.GetComponent<Seeable>().alreadySeen = true;
+                        guard.FoundPlayer();
+                    }
+                    else if (target.GetComponent<Seeable>().Seen() && target.tag == "coin" && guard.currentPathing is follow)
+                    {
+                        target.GetComponent<Seeable>().alreadySeen = true;
+                        guard.FoundCoin(target.transform);
                     }
             }
         }
