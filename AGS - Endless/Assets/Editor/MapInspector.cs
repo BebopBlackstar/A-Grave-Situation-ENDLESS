@@ -70,6 +70,7 @@ public class MapInspector : Editor
             var empty = new GameObject("Wall Group");
             empty.tag = "Wall";
             empty.transform.SetParent(mapGen.transform);
+            empty.transform.SetAsFirstSibling();
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Wall.prefab", typeof(GameObject));
             foreach (Transform go in mapGen.transform)
             {
