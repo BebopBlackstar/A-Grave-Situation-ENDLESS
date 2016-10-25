@@ -10,7 +10,7 @@ public class diggable : Seeable
     private float completion;
     public float percentComplete;
     private bool complete = false;
-    private bool collected = false;
+    public bool collected = false;
     private bool unpressed = false;
     private GameObject player;
     // Use this for initialization
@@ -43,7 +43,7 @@ public class diggable : Seeable
             {
                 completion += digSpeed;
                 graveTop.position = new Vector3(graveTop.position.x, graveTop.position.y - digSpeed, graveTop.position.z);
-                percentComplete = completion / dropDistance * 100;
+                percentComplete = Mathf.Floor(completion / dropDistance * 100);
             }
          
             yield return null;
@@ -51,8 +51,9 @@ public class diggable : Seeable
     }
     public override bool Seen()
     {
-        if (complete)
+        if (percentComplete > 30 && !alreadySeen)
         {
+            alreadySeen = true;
             return true;
         }
         return false;

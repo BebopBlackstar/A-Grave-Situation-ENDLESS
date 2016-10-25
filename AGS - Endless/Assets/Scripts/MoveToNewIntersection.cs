@@ -11,7 +11,12 @@ public class MoveToNewIntersection : MonoBehaviour
     private fieldOfView m_fieldOfView;
     public float weightingFactor;
     public LayerMask Walls;
+    public float findMoveSpeed = 3;
+    private float normalMoveSpeed;
+    public float foundGraveSearchRadius;
     private int currentPath;
+    private List<Transform> m_searchMarkers = new List<Transform>();
+    private int searchPath;
     void Start()
     {
         m_agent = GetComponent<NavMeshAgent>();
@@ -19,6 +24,7 @@ public class MoveToNewIntersection : MonoBehaviour
         m_fieldOfView = GetComponent<fieldOfView>();
         m_markers = markers.ToList();
         m_markers.RemoveAt(0);
+        normalMoveSpeed = m_agent.speed;
     }
     float calculatePathLength(Vector3 startPos, Vector3 endPos)
     {
@@ -64,8 +70,21 @@ public class MoveToNewIntersection : MonoBehaviour
     }
     void followPath()
     {
-        m_agent.destination = m_markers[currentPath % m_markers.Count].position;
-        currentPath++;
+        if (m_searchMarkers.Count > 0)
+        {
+            m_agent.destination = m_searchMarkers[searchPath % m_searchMarkers.Count].position;
+            searchPath++;
+            if (searchPath >= m_searchMarkers.Count)
+            {
+                m_searchMarkers = new List<Transform>();
+                m_agent.speed = normalMoveSpeed;
+            }
+        }
+        else
+        {
+            m_agent.destination = m_markers[currentPath % m_markers.Count].position;
+            currentPath++;
+        }
     }
     void newWeightedPath()
     {
@@ -85,9 +104,9 @@ public class MoveToNewIntersection : MonoBehaviour
         float percent = Random.Range(0, completeWeight);
         float i = 0;
         Vector3 target = new Vector3();
-        foreach(var marker in possibleNodes)
+        foreach (var marker in possibleNodes)
         {
-            if(i >= percent)
+            if (i >= percent)
             {
                 m_agent.destination = target;
                 break;
@@ -104,12 +123,19 @@ public class MoveToNewIntersection : MonoBehaviour
     }
     public void FoundEmptyGrave(GameObject grave)
     {
-        Debug.Log("found the grave and its super empty");
+        m_agent.speed = findMoveSpeed;
+        foreach (var point in m_markers)
+        {
+            if (Vector3.Distance(transform.position, point.position) <= foundGraveSearchRadius)
+            {
+                m_searchMarkers.Add(point.transform);
+            }
+        }
     }
     public void FoundPlayer()
     {
         m_agent.destination = Player.position;
-        m_agent.speed = 5;
+        m_agent.speed = findMoveSpeed;
         m_agent.angularSpeed = 500;
         m_agent.acceleration = 500;
     }

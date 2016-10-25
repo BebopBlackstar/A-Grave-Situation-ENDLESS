@@ -16,16 +16,13 @@ public class PlayerCont : Seeable
     public float carrySpeed = 5;
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != LayerMask.NameToLayer("InvisiableWalls"))
-            triggerObject = other;
+
+        triggerObject = other;
     }
     public void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer != LayerMask.NameToLayer("InvisiableWalls"))
-        {
-            StopCoroutine(routine);
-            triggerObject = null;
-        }
+        StopCoroutine(routine);
+        triggerObject = null;
     }
     public void TriggerHandle()
     {

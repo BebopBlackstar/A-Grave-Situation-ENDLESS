@@ -10,6 +10,7 @@ public class fieldOfView : MonoBehaviour
     public float viewRadius;
     [Range(0, 360)]
     public float viewAngle;
+    public float graveSeeDistance;
     public LayerMask walls;
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
@@ -31,7 +32,7 @@ public class fieldOfView : MonoBehaviour
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
             {
                 if (target.GetComponent<Seeable>() != null)
-                    if (target.GetComponent<Seeable>().Seen() && target.tag != "Player")
+                    if (target.GetComponent<Seeable>().Seen() && target.tag != "Player" && Physics.Raycast(new Ray(transform.position, dirToTarget), graveSeeDistance, walls))
                     {
                         GetComponentInParent<MoveToNewIntersection>().FoundEmptyGrave(target.gameObject);
                     }
