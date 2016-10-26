@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Seeable : MonoBehaviour {
-    public virtual bool Seen() { return false; }
+public class Seeable : MonoBehaviour
+{
+    public bool alreadySeen = false;
+    public virtual bool Seen()
+    {
+        if (alreadySeen) return false;  
+        return true;
+    }
 
 }

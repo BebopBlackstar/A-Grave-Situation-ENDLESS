@@ -13,6 +13,7 @@ public class Grouper : MonoBehaviour
         go.transform.SetParent(Selection.activeTransform.parent, false);
         foreach (var transform in Selection.transforms) Undo.SetTransformParent(transform, go.transform, "Group Selected");
         Selection.activeGameObject = go;
+        go.transform.SetAsFirstSibling();
     }
 
 }

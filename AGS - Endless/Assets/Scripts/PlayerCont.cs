@@ -9,23 +9,21 @@ public class PlayerCont : Seeable
     private IEnumerator routine;
     private Collider triggerObject;
     public float turnSpeed = .5f;
-    public float moneh, carryMoneh;
+    public int moneh, carryMoneh;
     private GameObject body;
-    public GameObject deactiveGuard;
+    public GameObject coin;
     Vector3 movement, moveDirection;
     public float carrySpeed = 5;
+    private bool droppedThisFrame = false;
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != LayerMask.NameToLayer("InvisiableWalls"))
-            triggerObject = other;
+        triggerObject = other;
     }
     public void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer != LayerMask.NameToLayer("InvisiableWalls"))
-        {
+        if (routine != null)
             StopCoroutine(routine);
-            triggerObject = null;
-        }
+        triggerObject = null;
     }
     public void TriggerHandle()
     {
@@ -43,12 +41,12 @@ public class PlayerCont : Seeable
             carrySpeed = temp;
             body.SetActive(false);
         }
-        if (Input.GetButtonUp("Jump"))
+        if (Input.GetButtonUp("Jump") && routine != null)
         {
             StopCoroutine(routine);
         }
     }
-    public void carry(float value)
+    public void carry(int value)
     {
         carryMoneh = value;
         carrying = true;
@@ -73,7 +71,16 @@ public class PlayerCont : Seeable
         moveDirection = m_camera.TransformDirection(moveDirection);
         moveDirection.y *= 0;
         movement = moveDirection.normalized * moveSpeed;
-
+        if (Input.GetAxisRaw("Drop") != 0 && !droppedThisFrame && moneh > 0)
+        {
+            moneh--;
+            droppedThisFrame = true;
+            GameObject go = Instantiate(coin, transform.position, Random.rotation) as GameObject;
+        }
+        else if (Input.GetAxisRaw("Drop") == 0)
+        {
+            droppedThisFrame = false;
+        }
         if (triggerObject != null)
             TriggerHandle();
     }
