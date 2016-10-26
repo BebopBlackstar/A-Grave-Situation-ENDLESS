@@ -3,6 +3,7 @@ using System.Collections;
 
 public class graveText : MonoBehaviour
 {
+    [Tooltip("Grave this is over")]
     public diggable grave;
     private TextMesh m_text;
     // Use this for initialization

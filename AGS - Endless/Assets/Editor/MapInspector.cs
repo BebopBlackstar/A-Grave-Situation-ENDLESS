@@ -33,20 +33,22 @@ public class MapInspector : Editor
     public override void OnInspectorGUI()
     {
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Map width");
+
+        GUILayout.Label(new GUIContent("Map width", "The width of the map"));        
         mapGen.width = EditorGUILayout.IntSlider(mapGen.width, 2, 100);
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Map height");
+        GUILayout.Label(new GUIContent("Map height", "The height of the map"));
         mapGen.height = EditorGUILayout.IntSlider(mapGen.height, 2, 100);
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Creating");
+        GUILayout.Label(new GUIContent("Creating", "Leave ticked if you want alt to select when held down"));
         mapGen.creating = EditorGUILayout.Toggle(mapGen.creating);
         GUILayout.EndHorizontal();
-        if (GUILayout.Button("GenerateMap"))
+
+        if (GUILayout.Button(new GUIContent("Generate Map", "Creates the tiles of the map of width and heigh")))
         {
             var children = new List<GameObject>();
             foreach (Transform child in mapGen.transform) children.Add(child.gameObject);
@@ -65,7 +67,7 @@ public class MapInspector : Editor
                 }
             }
         }
-        if (GUILayout.Button("GenerateWalls"))
+        if (GUILayout.Button(new GUIContent("Generate Walls", "Creates walls over all tiles not in a path marked group")))
         {
             var empty = new GameObject("Wall Group");
             empty.tag = "Wall";
