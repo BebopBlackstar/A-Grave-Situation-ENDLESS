@@ -6,12 +6,17 @@ using System.Collections.Generic;
 
 public class fieldOfView : MonoBehaviour
 {
+    [Tooltip("Detail of the FOV")]
     public int MeshResolution;
-    public float viewRadius;
-    [Range(0, 360)]
+    [Tooltip("How far out the view will go")]
+    public float viewRadius;    
+    [Range(0, 360), Tooltip("Angle that guard will see anything")]
     public float viewAngle;
-    public float graveSeeDistance;
+    [Tooltip("Wall layer")]
     public LayerMask walls;
+    [Tooltip("How far out he will see empty graves")]
+    public float GraveRadius;
+    [Tooltip("The mesh child to the guard")]
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
     void Start()
@@ -33,7 +38,7 @@ public class fieldOfView : MonoBehaviour
             {
                 var guard = GetComponentInParent<MoveToNewIntersection>();
                 if (target.GetComponent<Seeable>() != null)
-                    if (target.GetComponent<Seeable>().Seen() && target.tag == "diggable" && Physics.Raycast(new Ray(transform.position, dirToTarget), graveSeeDistance, walls))
+                    if (target.GetComponent<Seeable>().Seen() && target.tag == "diggable" && Physics.Raycast(new Ray(transform.position, dirToTarget), GraveRadius, walls))
                     {
                         target.GetComponent<Seeable>().alreadySeen = true;
                         guard.FoundEmptyGrave(target.gameObject);

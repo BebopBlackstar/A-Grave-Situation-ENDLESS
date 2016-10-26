@@ -3,15 +3,23 @@ using System.Collections;
 
 public class diggable : Seeable
 {
+    [Tooltip("The object for the top of the grave")]
     public Transform graveTop;
+    [Tooltip("how fast this grave will be lowered")]
     public float digSpeed;
+    [Tooltip("How far the grave needs to be dropped")]
     public float dropDistance = 3;
+    [Tooltip("How much money this grave is worth")]
     public int value;
+    [Tooltip("The low value of the random")]
     public int Low = 1;
-    public int High = 10;
+    [Tooltip("The high value of the random")]
+    public int High = 10;   
     private float completion;
+    [Tooltip("the percentage complete")]
     public float percentComplete;
     private bool complete = false;
+    [Tooltip("If the body has been collected")]
     public bool collected = false;
     private GameObject player;
     // Use this for initialization

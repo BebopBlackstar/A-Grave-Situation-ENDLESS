@@ -4,18 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 public class MoveToNewIntersection : MonoBehaviour
 {
+    [Tooltip("Player in scene")]
     public Transform Player;
-    private NavMeshAgent m_agent;
+    [Tooltip("The empty of the Waypoint Markers")]
     public GameObject markerContainer;
+    [Tooltip("The layer of Walls")]
+    public LayerMask Walls;
+    [Tooltip("The move speed of the agent when he has found something")]
+    public float findMoveSpeed = 3;
+   
+    [Tooltip("Ignore")]
+    public Pathing currentPathing;
+
+    private NavMeshAgent m_agent;
     private List<Transform> m_markers;
     private fieldOfView m_fieldOfView;
-    public float weightingFactor;
-    public LayerMask Walls;
-    public float findMoveSpeed = 3;
     private float normalMoveSpeed;
-    public float foundGraveSearchRadius;
     private int currentPath;
-    public Pathing currentPathing;
     private List<Transform> m_searchMarkers = new List<Transform>();
     private int searchPath;
     void Start()
@@ -127,7 +132,7 @@ public class MoveToNewIntersection : MonoBehaviour
     {
         m_agent.speed = findMoveSpeed;
         foreach (var point in m_markers)
-            if (Vector3.Distance(transform.position, point.position) <= foundGraveSearchRadius)
+            if (Vector3.Distance(transform.position, point.position) <= GetComponent<fieldOfView>().GraveRadius)
                 m_searchMarkers.Add(point.transform);
 
     }

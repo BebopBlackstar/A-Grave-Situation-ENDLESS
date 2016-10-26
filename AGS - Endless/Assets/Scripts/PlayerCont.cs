@@ -3,18 +3,36 @@ using System.Collections;
 
 public class PlayerCont : Seeable
 {
+    [Header("Player Setup")]
+    [Tooltip("How fast the player will move")]
     public float moveSpeed = 10;
+    [Tooltip("Speed of the model turning, only for looks")]
+    public float turnSpeed = .5f;
+    [Tooltip("Current money")]
+    public int moneh;
+    [Tooltip("Money being carryed on body")]
+    public int carryMoneh;
+
+    [Header("Coin Throwing")]
+    [Tooltip("Coin Prefab")]
+    public GameObject coin;
+    [Tooltip("The max force to throw the coin")]
+    public float maxThrowForce = 30;
+    [Tooltip("How High the coin will be thrown")]
+    public float arkAmount = 2;
+    [Tooltip("How fast you wind up the throw")]
+    public float throwSpeed = 10;
+
     private Transform m_camera;
     private bool carrying;
     private IEnumerator routine;
     private Collider triggerObject;
-    public float turnSpeed = .5f;
-    public int moneh, carryMoneh;
     private GameObject body;
-    public GameObject coin;
+
     Vector3 movement, moveDirection;
     public float carrySpeed = 5;
-    private bool droppedThisFrame = false;
+    private bool droppedThisFrame = true;
+    private float timeHeld;
     public void OnTriggerEnter(Collider other)
     {
         triggerObject = other;
@@ -71,16 +89,37 @@ public class PlayerCont : Seeable
         moveDirection = m_camera.TransformDirection(moveDirection);
         moveDirection.y *= 0;
         movement = moveDirection.normalized * moveSpeed;
-        if (Input.GetAxisRaw("Drop") != 0 && !droppedThisFrame && moneh > 0)
+        if (Input.GetAxisRaw("Drop") != 0 && moneh > 0 && droppedThisFrame)
+        {
+            timeHeld = Time.time;
+            droppedThisFrame = false;
+            Debug.Log(Time.time - timeHeld);
+        }
+        else if (Input.GetAxisRaw("Drop") == 0 && !droppedThisFrame)
         {
             moneh--;
             droppedThisFrame = true;
             GameObject go = Instantiate(coin, transform.position, Random.rotation) as GameObject;
+            Physics.IgnoreCollision(go.GetComponent<Collider>(), GetComponent<Collider>(), true);
+            Vector3 force = (transform.forward + (transform.up / arkAmount)).normalized;
+            go.GetComponent<Rigidbody>().AddForce(force * Mathf.Clamp((Time.time - timeHeld) * throwSpeed, 0, maxThrowForce));
         }
-        else if (Input.GetAxisRaw("Drop") == 0)
+        if (Input.GetAxisRaw("Drop") != 0 && moneh > 0)
         {
-            droppedThisFrame = false;
+
         }
+
+        //if (Input.GetAxisRaw("Drop") != 0 && !droppedThisFrame && moneh > 0)
+        //{
+        //    moneh--;
+        //    droppedThisFrame = true;
+        //    GameObject go = Instantiate(coin, transform.position, Random.rotation) as GameObject;
+        //    Physics.IgnoreCollision(go.GetComponent<Collider>(), GetComponent<Collider>(), true);
+        //}
+        //else if (Input.GetAxisRaw("Drop") == 0)
+        //{
+        //    droppedThisFrame = false;
+        //}
         if (triggerObject != null)
             TriggerHandle();
     }
