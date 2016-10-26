@@ -6,12 +6,15 @@ public class PlayerCont : Seeable
     [Header("Player Setup")]
     [Tooltip("How fast the player will move")]
     public float moveSpeed = 10;
+    [Tooltip("Speed when carrying body")]
+    public float carrySpeed = 5;
     [Tooltip("Speed of the model turning, only for looks")]
     public float turnSpeed = .5f;
     [Tooltip("Current money")]
     public int moneh;
     [Tooltip("Money being carryed on body")]
     public int carryMoneh;
+
 
     [Header("Coin Throwing")]
     [Tooltip("Coin Prefab")]
@@ -30,7 +33,7 @@ public class PlayerCont : Seeable
     private GameObject body;
 
     Vector3 movement, moveDirection;
-    public float carrySpeed = 5;
+
     private bool droppedThisFrame = true;
     private float timeHeld;
     public void OnTriggerEnter(Collider other)
@@ -102,7 +105,9 @@ public class PlayerCont : Seeable
             GameObject go = Instantiate(coin, transform.position, Random.rotation) as GameObject;
             Physics.IgnoreCollision(go.GetComponent<Collider>(), GetComponent<Collider>(), true);
             Vector3 force = (transform.forward + (transform.up / arkAmount)).normalized;
-            go.GetComponent<Rigidbody>().AddForce(force * Mathf.Clamp((Time.time - timeHeld) * throwSpeed, 0, maxThrowForce));
+            float throwAmount = Mathf.Clamp((Time.time - timeHeld) * throwSpeed, 0, maxThrowForce);
+            go.GetComponent<Rigidbody>().AddForce(force * throwAmount);
+            go.GetComponent<Rigidbody>().AddForce(movement / throwAmount);
         }
         if (Input.GetAxisRaw("Drop") != 0 && moneh > 0)
         {
