@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Scene2.1.1 - Beginner.unity
+- path: Assets/Scenes/level made in 9min.unity
   isLoaded: 1
   isActive: 1

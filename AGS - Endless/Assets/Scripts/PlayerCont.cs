@@ -12,7 +12,7 @@ public class PlayerCont : Seeable
     public float turnSpeed = .5f;
     [Tooltip("Current money")]
     public int moneh;
-    [Tooltip("Money being carryed on body")]
+    [Tooltip("Money being carried on body")]
     public int carryMoneh;
 
     [Header("Coin Throwing")]
@@ -96,8 +96,7 @@ public class PlayerCont : Seeable
             List<Vector3> verts = new List<Vector3>();
             Vector3 force = (transform.forward + (transform.up / arkAmount)).normalized;
             float throwAmount = Mathf.Clamp((Time.time - timeHeld) * throwSpeed, 0, maxThrowForce);
-            force = force * throwAmount + movement / throwAmount;
-            
+            force = force * throwAmount + movement.normalized * throwAmount;
             for (float i = 0; i < 3; i += .1f)
             {
                 verts.Add(PlotTrajectoryAtTime(transform.position, force, i));
@@ -108,7 +107,7 @@ public class PlayerCont : Seeable
                 m_lr.SetPosition(i, verts[i]);
             }
             m_lr.gameObject.SetActive(true);
-            yield return new WaitForSeconds(.001f);
+            yield return new WaitForSeconds(.01f);
         }
     }
     // Update is called once per frame
@@ -120,10 +119,10 @@ public class PlayerCont : Seeable
         movement = moveDirection.normalized * moveSpeed;
         if (Input.GetAxisRaw("Drop") != 0 && moneh > 0 && droppedThisFrame)
         {
-            StartCoroutine(lineDraw);
-            timeHeld = Time.time;
-            droppedThisFrame = false;
 
+            timeHeld = Time.time;
+            StartCoroutine(lineDraw);
+            droppedThisFrame = false;
         }
         else if (Input.GetAxisRaw("Drop") == 0 && !droppedThisFrame)
         {
@@ -134,7 +133,7 @@ public class PlayerCont : Seeable
             Vector3 force = (transform.forward + (transform.up / arkAmount)).normalized;
             float throwAmount = Mathf.Clamp((Time.time - timeHeld) * throwSpeed, 0, maxThrowForce);
             go.GetComponent<Rigidbody>().AddForce(force * throwAmount);
-            go.GetComponent<Rigidbody>().AddForce(movement / throwAmount);
+            go.GetComponent<Rigidbody>().AddForce(movement.normalized * throwAmount);
             StopCoroutine(lineDraw);
             lineDraw = DrawLine();
             m_lr.gameObject.SetActive(false);
