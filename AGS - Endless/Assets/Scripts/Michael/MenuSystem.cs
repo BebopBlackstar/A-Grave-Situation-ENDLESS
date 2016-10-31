@@ -102,7 +102,7 @@ public class MenuSystem : MonoBehaviour
         {//SAVE GAME
             System.Type type = typeof(saves);
             XmlSerializer serilizer = new XmlSerializer(type);
-            StreamWriter writer = new StreamWriter("C:/Users/michael.gackle/Documents/A-Grave-Situation-ENDLESS/ProfileInfomation");
+            StreamWriter writer = new StreamWriter("../ProfileInfomation");
             Debug.Log("Writing Information");
             serilizer.Serialize(writer, stats);
             writer.Close();
