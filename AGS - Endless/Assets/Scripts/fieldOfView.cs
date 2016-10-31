@@ -38,15 +38,19 @@ public class fieldOfView : MonoBehaviour
             Vector3 dirToTarget = (target.transform.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
             {
+                RaycastHit hit;
+                Physics.Linecast(transform.position, target.transform.position, out hit);
+                Physics.Raycast(new Ray(transform.position, dirToTarget), out hit, viewRadius);
                 var guard = GetComponentInParent<MoveToNewIntersection>();
-                if (target.GetComponent<Seeable>() != null)
+                if (target.GetComponent<Seeable>() != null && hit.transform.tag ==  target.tag)
                     if (target.GetComponent<Seeable>().Seen() && target.tag == "diggable" && Physics.Raycast(new Ray(transform.position, dirToTarget), GraveRadius, walls))
                     {
                         target.GetComponent<Seeable>().alreadySeen = true;
                         guard.FoundEmptyGrave(target.gameObject);
                     }
-                    else if (target.GetComponent<Seeable>().Seen() && target.tag == "Player")
+                    else if (hit.transform.tag == "Player" && target.tag == "Player")
                     {
+                        target.GetComponent<Seeable>().Seen();
                         target.GetComponent<Seeable>().alreadySeen = true;
                         guard.FoundPlayer();
                     }
