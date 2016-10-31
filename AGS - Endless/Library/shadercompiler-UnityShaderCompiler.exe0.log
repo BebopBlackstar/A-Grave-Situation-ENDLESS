@@ -1,5 +1,6 @@
 Base path: C:/Program Files/Unity/Editor/Data
 Cmd: getPlatforms
+<<<<<<< HEAD
 Cmd: preprocess
   insize=2658 outsize=776 ok=1
 Cmd: compileSnippet
@@ -8,3 +9,5 @@ Cmd: compileSnippet
   api=4 type=1 insize=2215 outsize=802 kw=DIRECTIONAL LIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING ok=1
 Cmd: preprocess
   insize=2658 outsize=776 ok=1
+=======
+>>>>>>> fea2582bb53b50a259837c3fa02eebb3de889646

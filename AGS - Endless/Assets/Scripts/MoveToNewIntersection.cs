@@ -133,7 +133,7 @@ public class MoveToNewIntersection : MonoBehaviour
     {
         m_agent.speed = findMoveSpeed;
         foreach (var point in m_markers)
-            if (Vector3.Distance(transform.position, point.position) <= GetComponent<fieldOfView>().GraveRadius)
+            if (Vector3.Distance(transform.position, point.position) <= GetComponent<fieldOfView>().MarkerRadius)
                 m_searchMarkers.Add(point.transform);
 
     }

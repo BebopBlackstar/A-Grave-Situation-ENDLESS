@@ -15,7 +15,9 @@ public class fieldOfView : MonoBehaviour
     [Tooltip("Wall layer")]
     public LayerMask walls;
     [Tooltip("How far out he will see empty graves")]
-    public float GraveRadius;
+    public float GraveRadius = 1;
+    [Tooltip("How far out he will find markers")]
+    public float MarkerRadius = 10;
     [Tooltip("The mesh child to the guard")]
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
