@@ -1,8 +1,12 @@
 sceneSetups:
 <<<<<<< HEAD
+<<<<<<< HEAD
 - path: Assets/Scenes/level made in 9min.unity
 =======
 - path: Assets/Scenes/Scene3.unity
 >>>>>>> cf227a30d105b376255324966747b7a13903756a
+=======
+- path: Assets/Scenes/Scene3 - Ultimate mastery.unity
+>>>>>>> 718b55bfd643804c5797d33a5ffdb0b2fa465fc6
   isLoaded: 1
   isActive: 1
