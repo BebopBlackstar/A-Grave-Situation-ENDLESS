@@ -1,8 +1,9 @@
 ﻿<Properties StartupItem="AGS - Endless.CSharp.Plugins.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MapGenerator.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\diggable.cs">
     <Files>
       <File FileName="Assets\Scripts\MapGenerator.cs" Line="6" Column="21" />
+      <File FileName="Assets\Scripts\diggable.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

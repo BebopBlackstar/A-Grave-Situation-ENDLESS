@@ -14,7 +14,7 @@ public class diggable : Seeable
     [Tooltip("The low value of the random")]
     public int Low = 1;
     [Tooltip("The high value of the random")]
-    public int High = 10;   
+    public int High = 10;
     private float completion;
     [Tooltip("the percentage complete")]
     public float percentComplete;
@@ -26,7 +26,8 @@ public class diggable : Seeable
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        value = Random.Range(Low, High);
+        if (value == 0)
+            value = Random.Range(Low, High);
 
     }
     public IEnumerator dig()
@@ -58,7 +59,7 @@ public class diggable : Seeable
     public override bool Seen()
     {
         if (percentComplete > 30 && !alreadySeen)
-        {            
+        {
             return true;
         }
         return false;

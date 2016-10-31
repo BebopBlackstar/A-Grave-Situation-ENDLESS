@@ -12,7 +12,8 @@ public class MoveToNewIntersection : MonoBehaviour
     public LayerMask Walls;
     [Tooltip("The move speed of the agent when he has found something")]
     public float findMoveSpeed = 3;
-   
+    [Tooltip("How long the guard will stay at the coin in seconds")]
+    public float coinStayTime = 5;
     [Tooltip("Ignore")]
     public Pathing currentPathing;
 
@@ -132,7 +133,7 @@ public class MoveToNewIntersection : MonoBehaviour
     {
         m_agent.speed = findMoveSpeed;
         foreach (var point in m_markers)
-            if (Vector3.Distance(transform.position, point.position) <= GetComponent<fieldOfView>().GraveRadius)
+            if (Vector3.Distance(transform.position, point.position) <= GetComponent<fieldOfView>().MarkerRadius)
                 m_searchMarkers.Add(point.transform);
 
     }
@@ -155,7 +156,7 @@ public class MoveToNewIntersection : MonoBehaviour
     {
         m_agent.destination = coin.position;
         currentPathing = new coin(m_agent, coin);
-        StartCoroutine(StayAtCoin(5));
+        StartCoroutine(StayAtCoin(coinStayTime));
     }
     void Update()
     {
