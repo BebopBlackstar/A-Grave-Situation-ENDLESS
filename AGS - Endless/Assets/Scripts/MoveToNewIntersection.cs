@@ -147,6 +147,7 @@ public class MoveToNewIntersection : MonoBehaviour
     }
     public void FoundPlayer()
     {
+        currentPathing = new follow(m_agent);
         m_agent.destination = Player.position;
         m_agent.speed = findMoveSpeed;
         m_agent.angularSpeed = 500;
@@ -155,7 +156,9 @@ public class MoveToNewIntersection : MonoBehaviour
     public void FoundCoin(Transform coin)
     {
         m_agent.destination = coin.position;
+        coin.GetComponent<CoinGrab>().grabbed = true;
         currentPathing = new coin(m_agent, coin);
+
         StartCoroutine(StayAtCoin(coinStayTime));
     }
     void Update()

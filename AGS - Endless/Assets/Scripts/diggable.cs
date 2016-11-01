@@ -21,6 +21,7 @@ public class diggable : Seeable
     private bool complete = false;
     [Tooltip("If the body has been collected")]
     public bool collected = false;
+    //public GameObject part;
     private GameObject player;
     // Use this for initialization
     void Start()
@@ -48,6 +49,7 @@ public class diggable : Seeable
             }
             else
             {
+                //part.GetComponent<ParticleSystem>().Play();
                 completion += digSpeed;
                 graveTop.position = new Vector3(graveTop.position.x, graveTop.position.y - digSpeed, graveTop.position.z);
                 percentComplete = Mathf.Floor(completion / dropDistance * 100);
@@ -56,9 +58,9 @@ public class diggable : Seeable
             yield return null;
         }
     }
-    public override bool Seen()
+    public override bool Seen(string tag)
     {
-        if (percentComplete > 30 && !alreadySeen)
+        if (percentComplete > 30 && !alreadySeen && tag == "diggable")
         {
             return true;
         }

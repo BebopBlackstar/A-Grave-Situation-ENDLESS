@@ -75,6 +75,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CoinGrab.cs" />
     <Compile Include="Assets\LazyFog\Scripts\exampleSceneScript.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\FieldOfViewEditor.cs" />
