@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
 - path: Assets/Scenes/Scene2.1.1 - Beginner.unity
-=======
-- path: Assets/Scenes/Scene3 - Ultimate mastery.unity
->>>>>>> 5dafa61094dc01d021913f7b4a3a8bd590ca50ca
   isLoaded: 1
   isActive: 1
