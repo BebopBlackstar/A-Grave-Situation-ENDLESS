@@ -14,6 +14,8 @@ public class fieldOfView : MonoBehaviour
     public float viewAngle;
     [Tooltip("Wall layer")]
     int walls;
+    [Tooltip("How close to guard until he will find without fov")]
+    public float awarenessDistance;
     [Tooltip("Layer of grave hitboxes")]
     int gravehit;
     [Tooltip("How far out he will see empty graves")]
@@ -40,7 +42,7 @@ public class fieldOfView : MonoBehaviour
         foreach (var target in Targets)
         {
             Vector3 dirToTarget = (target.transform.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2 || Vector3.Distance(transform.position, target.transform.position) <= awarenessDistance)
             {
                 RaycastHit hit;
 
