@@ -56,9 +56,9 @@ public class diggable : Seeable
             yield return null;
         }
     }
-    public override bool Seen()
+    public override bool Seen(string tag)
     {
-        if (percentComplete > 30 && !alreadySeen)
+        if (percentComplete > 30 && !alreadySeen && tag == "diggable")
         {
             return true;
         }

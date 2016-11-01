@@ -141,10 +141,17 @@ public class PlayerCont : Seeable
         if (triggerObject != null)
             TriggerHandle();
     }
-    public override bool Seen()
+    public override bool Seen(string tag)
     {
-        moveSpeed = 0;
-        return true;
+        if (tag == "Player")
+        {
+            moveSpeed = 0;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     void FixedUpdate()
     {
