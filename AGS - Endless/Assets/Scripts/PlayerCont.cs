@@ -21,10 +21,12 @@ public class PlayerCont : Seeable
     public GameObject coin;
     [Tooltip("The max force to throw the coin")]
     public float maxThrowForce = 30;
-    [Tooltip("How High the coin will be thrown")]
+    [Tooltip("How High the coin will be thrown (higher for less)")]
     public float arkAmount = 2;
     [Tooltip("How fast you wind up the throw")]
     public float throwSpeed = 10;
+    [Tooltip("How much moving changes the distance (higher for less)"), Range(.1f, 100)]
+    public float moveThrow = 1;
     [Tooltip("How far away you can grab coins")]
     public float grabDistance = 2;
     private LineRenderer m_lr;
@@ -56,6 +58,7 @@ public class PlayerCont : Seeable
         if (routine != null)
             StopCoroutine(routine);
         triggerObject = null;
+        Camera.main.GetComponent<CameraFollow>().reset();
     }
     public void TriggerHandle()
     {
@@ -76,6 +79,7 @@ public class PlayerCont : Seeable
         if (Input.GetButtonUp("Jump") && routine != null)
         {
             StopCoroutine(routine);
+            Camera.main.GetComponent<CameraFollow>().reset();
         }
     }
     public void carry(int value)
@@ -98,7 +102,7 @@ public class PlayerCont : Seeable
             List<Vector3> verts = new List<Vector3>();
             Vector3 force = (transform.forward + (transform.up / arkAmount)).normalized;
             float throwAmount = Mathf.Clamp((Time.time - timeHeld) * throwSpeed, 0, maxThrowForce);
-            force = force * throwAmount + movement.normalized * throwAmount;
+            force = force * throwAmount + (movement.normalized * throwAmount) / moveThrow;
             for (float i = 0; i < 3; i += .1f)
             {
                 verts.Add(transform.InverseTransformPoint(PlotTrajectoryAtTime(transform.position, force, i)));
@@ -134,7 +138,7 @@ public class PlayerCont : Seeable
             Vector3 force = (transform.forward + (transform.up / arkAmount)).normalized;
             float throwAmount = Mathf.Clamp((Time.time - timeHeld) * throwSpeed, 0, maxThrowForce);
             go.GetComponent<Rigidbody>().AddForce(force * throwAmount);
-            go.GetComponent<Rigidbody>().AddForce(movement.normalized * throwAmount);
+            go.GetComponent<Rigidbody>().AddForce((movement.normalized * throwAmount) / moveThrow);
             StopCoroutine(lineDraw);
             lineDraw = DrawLine();
             m_lr.gameObject.SetActive(false);
@@ -162,7 +166,6 @@ public class PlayerCont : Seeable
     {
         if (tag == "Player")
         {
-            moveSpeed = 0;
             return true;
         }
         else
