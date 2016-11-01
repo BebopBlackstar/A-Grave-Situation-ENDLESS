@@ -44,10 +44,12 @@ public class diggable : Seeable
             else if (completion >= dropDistance)
             {
                 complete = true;
+                Camera.main.GetComponent<CameraFollow>().reset();
                 Input.GetAxis("breakthatshit");
             }
             else
             {
+                Camera.main.GetComponent<CameraFollow>().zoom();
                 completion += digSpeed;
                 graveTop.position = new Vector3(graveTop.position.x, graveTop.position.y - digSpeed, graveTop.position.z);
                 percentComplete = Mathf.Floor(completion / dropDistance * 100);

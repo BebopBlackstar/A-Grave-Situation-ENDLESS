@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityStandardAssets.ImageEffects;
 public class MoveToNewIntersection : MonoBehaviour
 {
     [Tooltip("Player in scene")]
@@ -16,7 +17,10 @@ public class MoveToNewIntersection : MonoBehaviour
     public float coinStayTime = 5;
     [Tooltip("Ignore")]
     public Pathing currentPathing;
-
+    [Tooltip("How fast the time scale reduces")]
+    public float fadeSpeed = .01f;
+    [Tooltip("How fast the blur increses")]
+    public float blurSpeed = .01f;
     private NavMeshAgent m_agent;
     private List<Transform> m_markers;
     private fieldOfView m_fieldOfView;
@@ -145,8 +149,37 @@ public class MoveToNewIntersection : MonoBehaviour
         currentPathing = new follow(m_agent);
         currentPathing.followPath();
     }
+    IEnumerator playerFoundFade(float FadeTick)
+    {
+        for (;;)
+        {
+            if (Time.timeScale >= FadeTick)
+            {
+                Time.timeScale -= FadeTick;
+                Debug.Log(Time.timeScale);
+                BlurOptimized main = Camera.main.GetComponent<BlurOptimized>();
+                main.blurSize += blurSpeed;
+                //main.blurIterations = (int)Mathf.Floor(main.blurSize);
+                yield return new WaitForSeconds(.01f);
+            }
+            else
+            {
+                Time.timeScale = 0;
+                Debug.Log(Time.timeScale);
+                break;
+            }
+        }
+    }
     public void FoundPlayer()
     {
+        if (Player.GetComponent<PlayerCont>().moveSpeed > 0)
+        {
+            Player.GetComponent<PlayerCont>().moveSpeed = 0;
+            BlurOptimized blur = Camera.main.gameObject.GetComponent<BlurOptimized>();
+            blur.enabled = true;
+            StartCoroutine(playerFoundFade(fadeSpeed));
+        }
+        
         currentPathing = new follow(m_agent);
         m_agent.destination = Player.position;
         m_agent.speed = findMoveSpeed;
