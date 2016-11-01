@@ -3,13 +3,14 @@ using System.Collections;
 
 public class CameraFollow : MonoBehaviour
 {
+    [Tooltip("Place the target (player) here")]
     public Transform target;
     private Vector3 m_offset;
-    [Range(0, 1)]
-    public float time = .05f;
-    public float rotationSpeed = 50;
-    public float zoomSpeed = 50;
-    public float minZoom = 1, maxZoom = 100;
+    [Range(0, 1), Tooltip("How fast the camera rotates and follows target")]
+    public float time = .5f;
+
+    //public float zoomSpeed = 50;
+    //public float minZoom = 1, maxZoom = 100;
     private bool cameraRotated = false;
     // Use this for initialization
     void Start()
@@ -30,13 +31,13 @@ public class CameraFollow : MonoBehaviour
         {
             cameraRotated = false;
         }
-        m_offset = Vector3.MoveTowards(m_offset, target.position, Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * Time.deltaTime);
-        bool tooClose = Vector3.Distance(m_offset, target.position) <= minZoom;
-        bool toofar = Vector3.Distance(m_offset, target.position) >= maxZoom;
-        if (tooClose || toofar)
-        {
-            m_offset = Vector3.MoveTowards(m_offset, target.position, Input.GetAxis("Mouse ScrollWheel") * -(zoomSpeed + 1) * Time.deltaTime);
-        }
+        //m_offset = Vector3.MoveTowards(m_offset, target.position, Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * Time.deltaTime);
+        //bool tooClose = Vector3.Distance(m_offset, target.position) <= minZoom;
+        //bool toofar = Vector3.Distance(m_offset, target.position) >= maxZoom;
+        //if (tooClose || toofar)
+        //{
+        //    m_offset = Vector3.MoveTowards(m_offset, target.position, Input.GetAxis("Mouse ScrollWheel") * -(zoomSpeed + 1) * Time.deltaTime);
+        //}
         transform.position = Vector3.Lerp(transform.position, target.position + m_offset, time);
         transform.LookAt(target.position);
     }

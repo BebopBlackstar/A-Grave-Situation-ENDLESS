@@ -25,6 +25,8 @@ public class PlayerCont : Seeable
     public float arkAmount = 2;
     [Tooltip("How fast you wind up the throw")]
     public float throwSpeed = 10;
+    [Tooltip("How far away you can grab coins")]
+    public float grabDistance = 2;
     private LineRenderer m_lr;
     private Transform m_camera;
     private bool carrying;
@@ -99,7 +101,7 @@ public class PlayerCont : Seeable
             force = force * throwAmount + movement.normalized * throwAmount;
             for (float i = 0; i < 3; i += .1f)
             {
-                verts.Add(PlotTrajectoryAtTime(transform.position, force, i));
+                verts.Add(transform.InverseTransformPoint(PlotTrajectoryAtTime(transform.position, force, i)));
             }
             m_lr.SetVertexCount(verts.Count);
             for (var i = 0; i < verts.Count; i++)
@@ -119,7 +121,6 @@ public class PlayerCont : Seeable
         movement = moveDirection.normalized * moveSpeed;
         if (Input.GetAxisRaw("Drop") != 0 && moneh > 0 && droppedThisFrame)
         {
-
             timeHeld = Time.time;
             StartCoroutine(lineDraw);
             droppedThisFrame = false;
@@ -140,6 +141,22 @@ public class PlayerCont : Seeable
         }
         if (triggerObject != null)
             TriggerHandle();
+        if (Input.GetButtonDown("Jump"))
+        {
+            var targets = Physics.OverlapSphere(transform.position, grabDistance);
+            foreach (var target in targets)
+            {
+                if (target.tag == "coin")
+                {
+                    if (!target.GetComponent<CoinGrab>().grabbed)
+                    {
+                        moneh++;
+                        Destroy(target.gameObject);
+                        break;
+                    }
+                }
+            }
+        }
     }
     public override bool Seen(string tag)
     {
