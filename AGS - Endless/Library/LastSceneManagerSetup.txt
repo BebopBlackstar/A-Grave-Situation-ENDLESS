@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/Scene2.1.1 - Beginner.unity
-=======
-- path: Assets/Scenes/Scene3.1.unity
->>>>>>> fbb758b5e9998f321d8f493a0d43b40ea366380d
+- path: Assets/Scenes/level made in 9min.unity
   isLoaded: 1
   isActive: 1

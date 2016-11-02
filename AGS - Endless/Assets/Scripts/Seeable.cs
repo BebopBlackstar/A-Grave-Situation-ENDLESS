@@ -6,7 +6,7 @@ public class Seeable : MonoBehaviour
     public bool alreadySeen = false;
     public virtual bool Seen(string tag)
     {
-        if (alreadySeen) return false;  
+        if (alreadySeen && tag == gameObject.tag) return false;  
         return true;
     }
 

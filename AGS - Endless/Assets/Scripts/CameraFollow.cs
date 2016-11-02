@@ -23,6 +23,7 @@ public class CameraFollow : MonoBehaviour
     {
         m_offset = transform.position - target.position;
         m_baseCamera = Camera.main.fieldOfView;
+        StartCoroutine(zoomOut());
     }
     public void zoom()
     {
@@ -72,13 +73,6 @@ public class CameraFollow : MonoBehaviour
         {
             cameraRotated = false;
         }
-        //m_offset = Vector3.MoveTowards(m_offset, target.position, Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * Time.deltaTime);
-        //bool tooClose = Vector3.Distance(m_offset, target.position) <= minZoom;
-        //bool toofar = Vector3.Distance(m_offset, target.position) >= maxZoom;
-        //if (tooClose || toofar)
-        //{
-        //    m_offset = Vector3.MoveTowards(m_offset, target.position, Input.GetAxis("Mouse ScrollWheel") * -(zoomSpeed + 1) * Time.deltaTime);
-        //}
         transform.position = Vector3.Lerp(transform.position, target.position + m_offset, time);
         transform.LookAt(target.position);
     }
