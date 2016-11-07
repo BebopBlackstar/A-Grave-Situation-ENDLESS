@@ -60,7 +60,7 @@ public class MenuSystem : MonoBehaviour
     public Scene scenes;
     public int Checktest = 3;
     int num_CurrentSlot = 0;
-    int levelCount = 0;
+    int levelCount = 2;
     saves stats;
     public int moneyCurrent = 2000;
     public string myName = "Default";
@@ -111,7 +111,11 @@ public class MenuSystem : MonoBehaviour
         {
             foreach (GameObject but in buttons_FirstSet)
             { but.SetActive(false); }
+<<<<<<< HEAD
+            buttons_SecondSet[0].gameObject.SetActive(true);
+=======
             buttons_SecondSet[0].SetActive(true);
+>>>>>>> 11b62b4153a5a73ae465d1c3bcae2aa5dfa87580
             enter = false;
         }
 
@@ -281,7 +285,11 @@ public class MenuSystem : MonoBehaviour
 
             foreach (GameObject but in buttons_FirstSet)
             { but.SetActive(true); }
+<<<<<<< HEAD
+            buttons_SecondSet[0].gameObject.SetActive(false);
+=======
             buttons_SecondSet[0].SetActive(false);
+>>>>>>> 11b62b4153a5a73ae465d1c3bcae2aa5dfa87580
             enter = true;
         }
 
