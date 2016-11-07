@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement; //Load scene testing Michael added, could lower performance?
 public class PlayerCont : Seeable
 {
     [Header("Player Setup")]
@@ -147,6 +148,11 @@ public class PlayerCont : Seeable
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+            SceneManager.LoadScene(0);
+        }
         moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         moveDirection = m_camera.TransformDirection(moveDirection);
         moveDirection.y *= 0;
