@@ -16,6 +16,15 @@ public class PlayerCont : Seeable
     public int carryMoneh;
     float baseMoveSpeed;
 
+    [Header("Sounds")]
+    [Tooltip("sound played on step")]
+    public AudioClip moveSound;
+    [Tooltip("sound played on dig")]
+    public AudioClip digSound;
+    [Tooltip("sound played on dropping body")]
+    public AudioClip dropSound;
+
+
     [Header("Sprint settings")]
     [Tooltip("How fast the player will run")]
     public float sprintSpeed;
@@ -31,8 +40,6 @@ public class PlayerCont : Seeable
     public float regen;
     [Tooltip("Stamina regen delay in seconds")]
     public float delay;
-    [Tooltip("Stamina regen delay after shift not drained in seconds")]
-    public float spamDelay;
     [Tooltip("Speed after sprint without stamina")]
     public float noStaminaSpeed;
 
@@ -96,6 +103,8 @@ public class PlayerCont : Seeable
         }
         else if (Input.GetButtonDown("Jump") && triggerObject.tag == "DropOff" && body.activeSelf == true)
         {
+            GetComponent<AudioSource>().clip = dropSound;
+            GetComponent<AudioSource>().Play();
             moneh += carryMoneh;
             carryMoneh = 0;
             moveSpeed = carrySpeed;
@@ -177,14 +186,18 @@ public class PlayerCont : Seeable
                     }
 
         }
-        if (Input.GetAxis("Sprint") != 0 && !drained)
+        if (Input.GetAxis("Sprint") != 0 && !drained && movement.magnitude > 0)
         {
             if (stamina >= consumedSpeed)
             {
                 if (body.activeSelf == false)
+                {
                     moveSpeed = sprintSpeed;
+                }
                 else
+                {
                     moveSpeed = bodySprintSpeed;
+                }
                 if (body.activeSelf == false)
                     stamina -= consumedSpeed;
                 else
@@ -196,6 +209,10 @@ public class PlayerCont : Seeable
                     timeDrained = Time.time;
                     drained = true;
                 }
+
+               
+
+
             }
             else
             {
@@ -249,7 +266,21 @@ public class PlayerCont : Seeable
     void FixedUpdate()
     {
         if (moveDirection.magnitude > 0)
+        {
             transform.rotation = Quaternion.Lerp(Quaternion.LookRotation(moveDirection), transform.rotation, turnSpeed);
+            if (!GetComponent<AudioSource>().isPlaying)
+            {
+                GetComponent<AudioSource>().clip = moveSound;
+                GetComponent<AudioSource>().Play();
+            }
+        }
         GetComponent<Rigidbody>().MovePosition(transform.position + movement * Time.deltaTime);
     }
+
+
+
+
+
+
+
 }
