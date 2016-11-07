@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement; //Load scene testing Michael added, could lower performance?
 public class PlayerCont : Seeable
 {
     [Header("Player Setup")]
@@ -14,9 +15,41 @@ public class PlayerCont : Seeable
     public int moneh;
     [Tooltip("Money being carried on body")]
     public int carryMoneh;
+    float baseMoveSpeed;
 
-    [Header("Coin Throwing")]
+    [Header("Sounds")]
+    [Tooltip("sound played on step")]
+    public AudioClip moveSound;
+    [Tooltip("sound played on dig")]
+    public AudioClip digSound;
+    [Tooltip("sound played on dropping body")]
+    public AudioClip dropSound;
+
+
+    [Header("Sprint settings")]
+    [Tooltip("How fast the player will run")]
+    public float sprintSpeed;
+    [Tooltip("How fast the player will run with body")]
+    public float bodySprintSpeed;
+    [Tooltip("Stamina regen per second")]
+    public float stamina;
+    [Tooltip("How fast the stamina is consumed")]
+    public float consumedSpeed;
+    [Tooltip("How fast the stamina is consumed with body")]
+    public float bodyConsumedSpeed;
+    [Tooltip("Stamina regen per second")]
+    public float regen;
+    [Tooltip("Stamina regen delay in seconds")]
+    public float delay;
+    [Tooltip("Speed after sprint without stamina")]
+    public float noStaminaSpeed;
+
+
+    float maxStamina;
+    bool drained = false;
+    float timeDrained;
     private float coinLine = .11f;
+    [Header("Coin Throwing")]
     [Tooltip("Coin Prefab")]
     public GameObject coin;
     [Tooltip("The max force to throw the coin")]
@@ -25,7 +58,7 @@ public class PlayerCont : Seeable
     public float arkAmount = 2;
     [Tooltip("How fast you wind up the throw")]
     public float throwSpeed = 10;
-    [Tooltip("How much moving changes the distance (higher for less)"), Range(.1f, 100)]
+    [Tooltip("How much moving changes the distance (higher for less)"), Range(.1f, 10)]
     public float moveThrow = 1;
     [Tooltip("How far away you can grab coins")]
     public float grabDistance = 2;
@@ -48,6 +81,8 @@ public class PlayerCont : Seeable
         m_lr = GetComponentInChildren<LineRenderer>();
         m_lr.gameObject.SetActive(false);
         body.SetActive(false);
+        maxStamina = stamina;
+        baseMoveSpeed = moveSpeed;
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -69,11 +104,11 @@ public class PlayerCont : Seeable
         }
         else if (Input.GetButtonDown("Jump") && triggerObject.tag == "DropOff" && body.activeSelf == true)
         {
+            GetComponent<AudioSource>().clip = dropSound;
+            GetComponent<AudioSource>().Play();
             moneh += carryMoneh;
             carryMoneh = 0;
-            float temp = moveSpeed;
             moveSpeed = carrySpeed;
-            carrySpeed = temp;
             body.SetActive(false);
         }
         if (Input.GetButtonUp("Jump") && routine != null)
@@ -87,9 +122,7 @@ public class PlayerCont : Seeable
         carryMoneh = value;
         carrying = true;
         body.SetActive(carrying);
-        float temp = moveSpeed;
         moveSpeed = carrySpeed;
-        carrySpeed = temp;
     }
     public Vector3 PlotTrajectoryAtTime(Vector3 start, Vector3 startVelocity, float time)
     {
@@ -104,14 +137,10 @@ public class PlayerCont : Seeable
             float throwAmount = Mathf.Clamp((Time.time - timeHeld) * throwSpeed, 0, maxThrowForce);
             force = force * throwAmount + (movement.normalized * throwAmount) / moveThrow;
             for (float i = 0; i < 3; i += .1f)
-            {
                 verts.Add(transform.InverseTransformPoint(PlotTrajectoryAtTime(transform.position, force, i)));
-            }
             m_lr.SetVertexCount(verts.Count);
             for (var i = 0; i < verts.Count; i++)
-            {
                 m_lr.SetPosition(i, verts[i]);
-            }
             m_lr.gameObject.SetActive(true);
             yield return new WaitForSeconds(.01f);
         }
@@ -119,6 +148,11 @@ public class PlayerCont : Seeable
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+            SceneManager.LoadScene(0);
+        }
         moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         moveDirection = m_camera.TransformDirection(moveDirection);
         moveDirection.y *= 0;
@@ -149,35 +183,110 @@ public class PlayerCont : Seeable
         {
             var targets = Physics.OverlapSphere(transform.position, grabDistance);
             foreach (var target in targets)
-            {
                 if (target.tag == "coin")
-                {
                     if (!target.GetComponent<CoinGrab>().grabbed)
                     {
                         moneh++;
                         Destroy(target.gameObject);
                         break;
                     }
+
+        }
+        if (Input.GetAxis("Sprint") != 0 && !drained && movement.magnitude > 0)
+        {
+            if (stamina >= consumedSpeed)
+            {
+                if (body.activeSelf == false)
+                {
+                    moveSpeed = sprintSpeed;
+                }
+                else
+                {
+                    moveSpeed = bodySprintSpeed;
+                }
+                if (body.activeSelf == false)
+                    stamina -= consumedSpeed;
+                else
+                    stamina -= bodyConsumedSpeed;
+
+                if (stamina < consumedSpeed)
+                {
+                    stamina = 0;
+                    timeDrained = Time.time;
+                    drained = true;
+                }
+
+               
+
+
+            }
+            else
+            {
+                stamina = 0;
+                timeDrained = Time.time;
+                drained = true;
+            }
+
+        }
+        else if (stamina < maxStamina && (Input.GetAxis("Sprint") == 0 || drained))
+        {
+            if (drained)
+            {
+                if (body.activeSelf == false)
+                    moveSpeed = noStaminaSpeed;
+                else
+                    moveSpeed = carrySpeed;
+            }
+            else
+            {
+                if (body.activeSelf == false)
+                    moveSpeed = baseMoveSpeed;
+                else
+                    moveSpeed = carrySpeed;
+            }
+            if ((Time.time - timeDrained) > delay)
+            {
+                stamina += regen;
+                if (stamina >= maxStamina)
+                {
+                    drained = false;
+                    stamina = maxStamina;
                 }
             }
+        }
+        else
+        {
+            if (body.activeSelf == false)
+                moveSpeed = baseMoveSpeed;
+            else
+                moveSpeed = carrySpeed;
         }
     }
     public override bool Seen(string tag)
     {
         if (tag == "Player")
-        {
             return true;
-        }
         else
-        {
             return false;
-        }
     }
     void FixedUpdate()
     {
-
         if (moveDirection.magnitude > 0)
+        {
             transform.rotation = Quaternion.Lerp(Quaternion.LookRotation(moveDirection), transform.rotation, turnSpeed);
+            if (!GetComponent<AudioSource>().isPlaying)
+            {
+                GetComponent<AudioSource>().clip = moveSound;
+                GetComponent<AudioSource>().Play();
+            }
+        }
         GetComponent<Rigidbody>().MovePosition(transform.position + movement * Time.deltaTime);
     }
+
+
+
+
+
+
+
 }

@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="Assets\CoinGrab.cs" />
     <Compile Include="Assets\LazyFog\Scripts\exampleSceneScript.cs" />
+    <Compile Include="Assets\Money.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\FieldOfViewEditor.cs" />
     <Compile Include="Assets\Scripts\MapGenerator.cs" />
@@ -84,14 +85,23 @@
     <Compile Include="Assets\Scripts\MoveToNewIntersection.cs" />
     <Compile Include="Assets\Scripts\PlayerCont.cs" />
     <Compile Include="Assets\Scripts\Seeable.cs" />
+    <Compile Include="Assets\Scripts\VolumetricLight.cs" />
+    <Compile Include="Assets\Scripts\VolumetricLightRenderer.cs" />
     <Compile Include="Assets\Scripts\diggable.cs" />
     <Compile Include="Assets\Scripts\fieldOfView.cs" />
     <Compile Include="Assets\Scripts\graveText.cs" />
+    <Compile Include="Assets\StaminaBar.cs" />
+    <Compile Include="Assets\clock.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Day-Night Skyboxes\Textures\Readme for Assigning.txt" />
+    <None Include="Assets\Day-Night Skyboxes\readme.txt" />
     <None Include="Assets\Editor\How to use.txt" />
     <None Include="Assets\LazyFog\Instructions.txt" />
     <None Include="Assets\LazyFog\Shaders\LazyFog.shader" />
+    <None Include="Assets\Shaders\BilateralBlur.shader" />
+    <None Include="Assets\Shaders\BlitAdd.shader" />
+    <None Include="Assets\Shaders\VolumetricLight.shader" />
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
