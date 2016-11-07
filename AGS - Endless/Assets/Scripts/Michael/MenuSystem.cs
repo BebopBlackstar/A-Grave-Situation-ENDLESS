@@ -17,9 +17,9 @@ public class saves //Save files and games data.
     public saves()
     {
         saveslots = new List<playerStats>(m_saveSlots);
-        saveslots.Add(new playerStats("Player1", 5, 1));
-        saveslots.Add(new playerStats("Player2", 5, 1));
-        saveslots.Add(new playerStats("Player3", 5, 1));
+        saveslots.Add(new playerStats("Player1", 5, 2));
+        saveslots.Add(new playerStats("Player2", 5, 2));
+        saveslots.Add(new playerStats("Player3", 5, 2));
     }
 }
 public class playerStats
@@ -111,6 +111,7 @@ public class MenuSystem : MonoBehaviour
         {
             foreach (GameObject but in buttons_FirstSet)
             { but.SetActive(false); }
+            buttons_SecondSet[0].SetActive(true);
             enter = false;
         }
 
@@ -280,6 +281,7 @@ public class MenuSystem : MonoBehaviour
 
             foreach (GameObject but in buttons_FirstSet)
             { but.SetActive(true); }
+            buttons_SecondSet[0].SetActive(false);
             enter = true;
         }
 
