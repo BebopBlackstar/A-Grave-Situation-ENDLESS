@@ -135,7 +135,7 @@ public class MoveToNewIntersection : MonoBehaviour
     }
     public void FoundPlayer()
     {
-        if (Player.GetComponent<PlayerCont>().enabled)
+        if (alertSound != null && Player.GetComponent<PlayerCont>().enabled)
         {
             GetComponent<AudioSource>().clip = alertSound;
             GetComponent<AudioSource>().Play();

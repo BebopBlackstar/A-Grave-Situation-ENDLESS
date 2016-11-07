@@ -104,8 +104,13 @@ public class PlayerCont : Seeable
         }
         else if (Input.GetButtonDown("Jump") && triggerObject.tag == "DropOff" && body.activeSelf == true)
         {
-            GetComponent<AudioSource>().clip = dropSound;
-            GetComponent<AudioSource>().Play();
+            if (dropSound != null)
+            {
+                GetComponent<AudioSource>().clip = dropSound;
+                GetComponent<AudioSource>().Play();
+            }
+
+
             moneh += carryMoneh;
             carryMoneh = 0;
             moveSpeed = carrySpeed;
@@ -274,7 +279,8 @@ public class PlayerCont : Seeable
         if (moveDirection.magnitude > 0)
         {
             transform.rotation = Quaternion.Lerp(Quaternion.LookRotation(moveDirection), transform.rotation, turnSpeed);
-            if (!GetComponent<AudioSource>().isPlaying)
+
+            if (moveSound != null && !GetComponent<AudioSource>().isPlaying)
             {
                 GetComponent<AudioSource>().clip = moveSound;
                 GetComponent<AudioSource>().Play();
