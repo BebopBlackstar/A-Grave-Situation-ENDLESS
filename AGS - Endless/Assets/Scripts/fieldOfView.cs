@@ -48,7 +48,7 @@ public class fieldOfView : MonoBehaviour
 
                 var guard = GetComponentInParent<MoveToNewIntersection>();
                 if (target.GetComponent<Seeable>() != null)
-                    if (target.GetComponent<Seeable>().Seen(target.tag) && guard.foundGrave == false)
+                    if (target.GetComponent<Seeable>().Seen("diggable") && guard.foundGrave == false)
                     {
                         var Targets1 = Physics.OverlapSphere(transform.position, GraveRadius, walls);
                         foreach (var target1 in Targets1)
