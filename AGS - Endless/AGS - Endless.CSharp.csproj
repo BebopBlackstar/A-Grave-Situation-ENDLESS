@@ -91,6 +91,7 @@
     <Compile Include="Assets\Scripts\fieldOfView.cs" />
     <Compile Include="Assets\Scripts\graveText.cs" />
     <Compile Include="Assets\StaminaBar.cs" />
+    <Compile Include="Assets\clock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Day-Night Skyboxes\Textures\Readme for Assigning.txt" />
