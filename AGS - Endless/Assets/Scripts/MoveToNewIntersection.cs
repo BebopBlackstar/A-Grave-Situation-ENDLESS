@@ -21,6 +21,10 @@ public class MoveToNewIntersection : MonoBehaviour
     public float fadeSpeed = .01f;
     [Tooltip("How fast the blur increses")]
     public float blurSpeed = .01f;
+    [Tooltip("Walk sound")]
+    public AudioClip moveSound;
+    [Tooltip("Sound when alerted")]
+    public AudioClip alertSound;
     [Tooltip("Delay before he serches around for graves")]
     public float delaySpeed = 1;
     private NavMeshAgent m_agent;
@@ -60,30 +64,6 @@ public class MoveToNewIntersection : MonoBehaviour
         }
         return lengthSoFar;
     }
-    void newPath()
-    {
-        Vector3 closest = new Vector3();
-        float closestDistance = Mathf.Infinity;
-        foreach (var marker in m_markers)
-        {
-            if (Vector3.Distance(marker.position, m_agent.destination) > 1)
-            {
-                float calculatedPathLength = calculatePathLength(transform.position, marker.position);
-                float distanceFromPlayer = calculatePathLength(marker.position, Player.position);
-                float weightedDistance = calculatedPathLength + distanceFromPlayer;
-                if (weightedDistance < closestDistance)
-                {
-                    bool hit = Physics.Linecast(transform.position, marker.position, Walls.value);
-                    if (!hit)
-                    {
-                        closest = marker.position;
-                        closestDistance = weightedDistance;
-                    }
-                }
-            }
-        }
-        m_agent.destination = closest;
-    }
     public void followPath()
     {
         if (m_searchMarkers.Count > 0)
@@ -102,43 +82,10 @@ public class MoveToNewIntersection : MonoBehaviour
             currentPath++;
         }
     }
-    void newWeightedPath()
-    {
-        List<KeyValuePair<Vector3, float>> possibleNodes = new List<KeyValuePair<Vector3, float>>();
-        float completeWeight = 0;
-        foreach (var marker in m_markers)
-        {
-            bool hit = Physics.Linecast(transform.position, marker.position, Walls.value);
-            if (!hit)
-            {
-                float weight = Vector3.Distance(transform.position, marker.position) + calculatePathLength(marker.position, Player.position);
-                possibleNodes.Add(new KeyValuePair<Vector3, float>(marker.position, weight));
-                completeWeight += weight;
-            }
-        }
-        possibleNodes.Sort((x, y) => y.Value.CompareTo(x.Value));
-        float percent = Random.Range(0, completeWeight);
-        float i = 0;
-        Vector3 target = new Vector3();
-        foreach (var marker in possibleNodes)
-        {
-            if (i >= percent)
-            {
-                m_agent.destination = target;
-                break;
-            }
-            target = marker.Key;
-            i += marker.Value;
-        }
-        //float distanceToPlayer = calculatePathLength(transform.position, Player.position);
-        //float chanceToPlayer = Random.Range(0, distanceToPlayer) / weightingFactor * 100;
-        //int thing = (int)Mathf.Round(chanceToPlayer) % possibleNodes.Count;
-        //Debug.Log(thing);
-        //m_agent.destination = possibleNodes[(int)Random.Range(0, chanceToPlayer % possibleNodes.Count)].Key;
-
-    }
     public void FoundEmptyGrave(GameObject grave)
     {
+        GetComponent<AudioSource>().clip = alertSound;
+        GetComponent<AudioSource>().Play();
         foundGrave = true;
         currentPathing = new coin(m_agent, grave.transform);
         StartCoroutine(FindGraveWait(grave));
@@ -176,7 +123,6 @@ public class MoveToNewIntersection : MonoBehaviour
                 Debug.Log(Time.timeScale);
                 BlurOptimized main = Camera.main.GetComponent<BlurOptimized>();
                 main.blurSize += blurSpeed;
-                //main.blurIterations = (int)Mathf.Floor(main.blurSize);
                 yield return new WaitForSeconds(.01f);
             }
             else
@@ -189,8 +135,10 @@ public class MoveToNewIntersection : MonoBehaviour
     }
     public void FoundPlayer()
     {
-        if (Player.GetComponent<PlayerCont>().moveSpeed > 0)
+        if (alertSound != null && Player.GetComponent<PlayerCont>().enabled)
         {
+            GetComponent<AudioSource>().clip = alertSound;
+            GetComponent<AudioSource>().Play();
             Player.GetComponent<PlayerCont>().enabled = false;
             BlurOptimized blur = Camera.main.gameObject.GetComponent<BlurOptimized>();
             blur.enabled = true;
@@ -205,6 +153,8 @@ public class MoveToNewIntersection : MonoBehaviour
     }
     public void FoundCoin(Transform coin)
     {
+        GetComponent<AudioSource>().clip = alertSound;
+        GetComponent<AudioSource>().Play();
         m_agent.destination = coin.position;
         coin.GetComponent<CoinGrab>().grabbed = true;
         currentPathing = new coin(m_agent, coin);
@@ -214,7 +164,6 @@ public class MoveToNewIntersection : MonoBehaviour
     void Update()
     {
         m_fieldOfView.Find();
-        m_fieldOfView.DrawFieldOfView();
         currentPathing.followPath();
     }
 }

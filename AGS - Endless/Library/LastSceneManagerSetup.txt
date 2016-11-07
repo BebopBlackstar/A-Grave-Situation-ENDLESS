@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/Title_screen.unity
+=======
+- path: Assets/Scenes/Scene2.1.1 - Beginner.unity
+>>>>>>> 11b62b4153a5a73ae465d1c3bcae2aa5dfa87580
   isLoaded: 1
   isActive: 1
