@@ -163,6 +163,8 @@
     <Compile Include="Assets\Standard Assets\Utility\WaypointProgressTracker.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Day-Night Skyboxes\Textures\Readme for Assigning.txt" />
+    <None Include="Assets\Day-Night Skyboxes\readme.txt" />
     <None Include="Assets\Editor\How to use.txt" />
     <None Include="Assets\LazyFog\Instructions.txt" />
     <None Include="Assets\LazyFog\Shaders\LazyFog.shader" />

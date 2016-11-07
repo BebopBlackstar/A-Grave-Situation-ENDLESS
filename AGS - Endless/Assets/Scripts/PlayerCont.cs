@@ -20,7 +20,9 @@ public class PlayerCont : Seeable
     [Header("Sprint settings")]
     [Tooltip("How fast the player will run")]
     public float sprintSpeed;
-    [Tooltip("How long player will run for")]
+    [Tooltip("How fast the player will run with body")]
+    public float bodySprintSpeed;
+    [Tooltip("Stamina regen per second")]
     public float stamina;
     [Tooltip("How fast the stamina is consumed")]
     public float consumedSpeed;
@@ -30,8 +32,12 @@ public class PlayerCont : Seeable
     public float regen;
     [Tooltip("Stamina regen delay in seconds")]
     public float delay;
+    [Tooltip("Stamina regen delay after shift not drained in seconds")]
+    public float spamDelay;
     [Tooltip("Speed after sprint without stamina")]
     public float noStaminaSpeed;
+
+
     float maxStamina;
     bool drained = false;
     float timeDrained;
@@ -93,9 +99,7 @@ public class PlayerCont : Seeable
         {
             moneh += carryMoneh;
             carryMoneh = 0;
-            float temp = moveSpeed;
             moveSpeed = carrySpeed;
-            carrySpeed = temp;
             body.SetActive(false);
         }
         if (Input.GetButtonUp("Jump") && routine != null)
@@ -109,9 +113,7 @@ public class PlayerCont : Seeable
         carryMoneh = value;
         carrying = true;
         body.SetActive(carrying);
-        float temp = moveSpeed;
         moveSpeed = carrySpeed;
-        carrySpeed = temp;
     }
     public Vector3 PlotTrajectoryAtTime(Vector3 start, Vector3 startVelocity, float time)
     {
@@ -126,14 +128,10 @@ public class PlayerCont : Seeable
             float throwAmount = Mathf.Clamp((Time.time - timeHeld) * throwSpeed, 0, maxThrowForce);
             force = force * throwAmount + (movement.normalized * throwAmount) / moveThrow;
             for (float i = 0; i < 3; i += .1f)
-            {
                 verts.Add(transform.InverseTransformPoint(PlotTrajectoryAtTime(transform.position, force, i)));
-            }
             m_lr.SetVertexCount(verts.Count);
             for (var i = 0; i < verts.Count; i++)
-            {
                 m_lr.SetPosition(i, verts[i]);
-            }
             m_lr.gameObject.SetActive(true);
             yield return new WaitForSeconds(.01f);
         }
@@ -176,48 +174,61 @@ public class PlayerCont : Seeable
         {
             var targets = Physics.OverlapSphere(transform.position, grabDistance);
             foreach (var target in targets)
-            {
                 if (target.tag == "coin")
-                {
                     if (!target.GetComponent<CoinGrab>().grabbed)
                     {
                         moneh++;
                         Destroy(target.gameObject);
                         break;
                     }
-                }
-            }
+
         }
-        if (Input.GetAxis("Sprint") != 0 && stamina >= consumedSpeed && !drained)
+        if (Input.GetAxis("Sprint") != 0 && !drained)
         {
-            moveSpeed = sprintSpeed;
-            if (body.activeSelf == false)
+            if (stamina >= consumedSpeed)
             {
-                stamina -= consumedSpeed;
+                if (body.activeSelf == false)
+                    moveSpeed = sprintSpeed;
+                else
+                    moveSpeed = bodySprintSpeed;
+                if (body.activeSelf == false)
+                    stamina -= consumedSpeed;
+                else
+                    stamina -= bodyConsumedSpeed;
+
+                if (stamina < consumedSpeed)
+                {
+                    stamina = 0;
+                    timeDrained = Time.time;
+                    drained = true;
+                }
             }
             else
             {
-                stamina -= bodyConsumedSpeed;
-            }
-                
-            if (stamina <= consumedSpeed)
-            {
+                stamina = 0;
                 timeDrained = Time.time;
                 drained = true;
             }
+
         }
-        else if (stamina < maxStamina && Input.GetAxis("Sprint") == 0)
+        else if (stamina < maxStamina && (Input.GetAxis("Sprint") == 0 || drained))
         {
-            if ((Time.time - timeDrained) > delay)
+            if (drained)
             {
                 if (body.activeSelf == false)
-                {
                     moveSpeed = noStaminaSpeed;
-                }
                 else
-                {
                     moveSpeed = carrySpeed;
-                }
+            }
+            else
+            {
+                if (body.activeSelf == false)
+                    moveSpeed = baseMoveSpeed;
+                else
+                    moveSpeed = carrySpeed;
+            }
+            if ((Time.time - timeDrained) > delay)
+            {
                 stamina += regen;
                 if (stamina >= maxStamina)
                 {
@@ -229,29 +240,20 @@ public class PlayerCont : Seeable
         else
         {
             if (body.activeSelf == false)
-            {
                 moveSpeed = baseMoveSpeed;
-            }
             else
-            {
                 moveSpeed = carrySpeed;
-            }
         }
     }
     public override bool Seen(string tag)
     {
         if (tag == "Player")
-        {
             return true;
-        }
         else
-        {
             return false;
-        }
     }
     void FixedUpdate()
     {
-
         if (moveDirection.magnitude > 0)
             transform.rotation = Quaternion.Lerp(Quaternion.LookRotation(moveDirection), transform.rotation, turnSpeed);
         GetComponent<Rigidbody>().MovePosition(transform.position + movement * Time.deltaTime);
