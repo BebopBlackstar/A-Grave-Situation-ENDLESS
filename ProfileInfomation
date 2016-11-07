@@ -3,18 +3,18 @@
   <saveslots>
     <playerStats>
       <name>Player1</name>
-      <moneh>2000</moneh>
-      <lvl>0</lvl>
+      <money>2000</money>
+      <lvl>1</lvl>
     </playerStats>
     <playerStats>
       <name>Player2</name>
-      <moneh>0</moneh>
-      <lvl>0</lvl>
+      <money>5</money>
+      <lvl>1</lvl>
     </playerStats>
     <playerStats>
       <name>Player3</name>
-      <moneh>0</moneh>
-      <lvl>0</lvl>
+      <money>5</money>
+      <lvl>1</lvl>
     </playerStats>
   </saveslots>
 </saves>
