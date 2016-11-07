@@ -51,7 +51,6 @@ public class diggable : Seeable
             else
             {
                 Camera.main.GetComponent<CameraFollow>().zoom();
-                //part.GetComponent<ParticleSystem>().Play();
                 completion += digSpeed;
                 graveTop.position = new Vector3(graveTop.position.x, graveTop.position.y - digSpeed, graveTop.position.z);
                 percentComplete = Mathf.Floor(completion / dropDistance * 100);

@@ -14,9 +14,28 @@ public class PlayerCont : Seeable
     public int moneh;
     [Tooltip("Money being carried on body")]
     public int carryMoneh;
+    float baseMoveSpeed;
 
-    [Header("Coin Throwing")]
+    [Header("Sprint settings")]
+    [Tooltip("How fast the player will run")]
+    public float sprintSpeed;
+    [Tooltip("How long player will run for")]
+    public float stamina;
+    [Tooltip("How fast the stamina is consumed")]
+    public float consumedSpeed;
+    [Tooltip("How fast the stamina is consumed with body")]
+    public float bodyConsumedSpeed;
+    [Tooltip("Stamina regen per second")]
+    public float regen;
+    [Tooltip("Stamina regen delay in seconds")]
+    public float delay;
+    [Tooltip("Speed after sprint without stamina")]
+    public float noStaminaSpeed;
+    float maxStamina;
+    bool drained = false;
+    float timeDrained;
     private float coinLine = .11f;
+    [Header("Coin Throwing")]
     [Tooltip("Coin Prefab")]
     public GameObject coin;
     [Tooltip("The max force to throw the coin")]
@@ -25,7 +44,7 @@ public class PlayerCont : Seeable
     public float arkAmount = 2;
     [Tooltip("How fast you wind up the throw")]
     public float throwSpeed = 10;
-    [Tooltip("How much moving changes the distance (higher for less)"), Range(.1f, 100)]
+    [Tooltip("How much moving changes the distance (higher for less)"), Range(.1f, 10)]
     public float moveThrow = 1;
     [Tooltip("How far away you can grab coins")]
     public float grabDistance = 2;
@@ -48,6 +67,8 @@ public class PlayerCont : Seeable
         m_lr = GetComponentInChildren<LineRenderer>();
         m_lr.gameObject.SetActive(false);
         body.SetActive(false);
+        maxStamina = stamina;
+        baseMoveSpeed = moveSpeed;
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -159,6 +180,55 @@ public class PlayerCont : Seeable
                         break;
                     }
                 }
+            }
+        }
+        if (Input.GetAxis("Sprint") != 0 && stamina >= consumedSpeed && !drained)
+        {
+            moveSpeed = sprintSpeed;
+            if (body.activeSelf == false)
+            {
+                stamina -= consumedSpeed;
+            }
+            else
+            {
+                stamina -= bodyConsumedSpeed;
+            }
+                
+            if (stamina <= consumedSpeed)
+            {
+                timeDrained = Time.time;
+                drained = true;
+            }
+        }
+        else if (stamina < maxStamina && Input.GetAxis("Sprint") == 0)
+        {
+            if ((Time.time - timeDrained) > delay)
+            {
+                if (body.activeSelf == false)
+                {
+                    moveSpeed = noStaminaSpeed;
+                }
+                else
+                {
+                    moveSpeed = carrySpeed;
+                }
+                stamina += regen;
+                if (stamina >= maxStamina)
+                {
+                    drained = false;
+                    stamina = maxStamina;
+                }
+            }
+        }
+        else
+        {
+            if (body.activeSelf == false)
+            {
+                moveSpeed = baseMoveSpeed;
+            }
+            else
+            {
+                moveSpeed = carrySpeed;
             }
         }
     }

@@ -21,6 +21,8 @@ public class MoveToNewIntersection : MonoBehaviour
     public float fadeSpeed = .01f;
     [Tooltip("How fast the blur increses")]
     public float blurSpeed = .01f;
+    [Tooltip("Delay before he serches around for graves")]
+    public float delaySpeed = 1;
     private NavMeshAgent m_agent;
     private List<Transform> m_markers;
     private fieldOfView m_fieldOfView;
@@ -28,6 +30,8 @@ public class MoveToNewIntersection : MonoBehaviour
     private int currentPath;
     private List<Transform> m_searchMarkers = new List<Transform>();
     private int searchPath;
+    [HideInInspector]
+    public bool foundGrave = false;
     void Start()
     {
         m_agent = GetComponent<NavMeshAgent>();
@@ -135,11 +139,24 @@ public class MoveToNewIntersection : MonoBehaviour
     }
     public void FoundEmptyGrave(GameObject grave)
     {
+        foundGrave = true;
+        currentPathing = new coin(m_agent, grave.transform);
+        StartCoroutine(FindGraveWait(grave));
+    }
+    IEnumerator FindGraveWait(GameObject grave)
+    {
+        while (m_agent.remainingDistance > 1)
+        {
+            m_agent.destination = grave.transform.position;
+            yield return new WaitForFixedUpdate();
+        }
+        yield return new WaitForSeconds(delaySpeed);
+        foundGrave = true;
+        currentPathing = new follow(m_agent);
         m_agent.speed = findMoveSpeed;
         foreach (var point in m_markers)
             if (Vector3.Distance(transform.position, point.position) <= GetComponent<fieldOfView>().MarkerRadius)
                 m_searchMarkers.Add(point.transform);
-
     }
     IEnumerator StayAtCoin(float sec)
     {
@@ -174,13 +191,13 @@ public class MoveToNewIntersection : MonoBehaviour
     {
         if (Player.GetComponent<PlayerCont>().moveSpeed > 0)
         {
-            Player.GetComponent<PlayerCont>().moveSpeed = 0;
+            Player.GetComponent<PlayerCont>().enabled = false;
             BlurOptimized blur = Camera.main.gameObject.GetComponent<BlurOptimized>();
             blur.enabled = true;
             StartCoroutine(playerFoundFade(fadeSpeed));
         }
-        
-        currentPathing = new follow(m_agent);
+
+        currentPathing = new coin(m_agent, Player);
         m_agent.destination = Player.position;
         m_agent.speed = findMoveSpeed;
         m_agent.angularSpeed = 500;
