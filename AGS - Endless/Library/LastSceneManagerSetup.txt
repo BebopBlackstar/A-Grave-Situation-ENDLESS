@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
 - path: Assets/Scenes/Scene 1 - Training.unity
-=======
-- path: Assets/Scenes/Title_screen.unity
->>>>>>> 2b4d6930dfe770b2ba474366cbddfe5ed0c379d7
   isLoaded: 1
   isActive: 1
