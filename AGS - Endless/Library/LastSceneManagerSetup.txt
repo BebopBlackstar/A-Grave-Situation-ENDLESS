@@ -1,12 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/Scene3.1.unity
-=======
-<<<<<<< HEAD
-- path: Assets/Scenes/Title_screen.unity
-=======
-- path: Assets/Scenes/Scene2.1.1 - Beginner.unity
->>>>>>> 11b62b4153a5a73ae465d1c3bcae2aa5dfa87580
->>>>>>> 1879e72cfd660d57ce42f3ad2457cd5d5f32b544
+- path: Assets/Scenes/Scene2.2 - Beginner var.unity
   isLoaded: 1
   isActive: 1
