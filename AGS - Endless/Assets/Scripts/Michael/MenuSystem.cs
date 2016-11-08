@@ -283,29 +283,23 @@ public class MenuSystem : MonoBehaviour
 
             foreach (GameObject but in buttons_FirstSet)
             { but.SetActive(true); }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             buttons_SecondSet[0].gameObject.SetActive(false);
             buttons_SecondSet[0].SetActive(false);
-=======
+
 //<<<<<<< HEAD
             buttons_SecondSet[0].gameObject.SetActive(false);
 //=======
             buttons_SecondSet[0].SetActive(false);
 //>>>>>>> 11b62b4153a5a73ae465d1c3bcae2aa5dfa87580
->>>>>>> e953d1527fdb42783727373fb0061e4dd12f2fb6
-=======
+
 
             foreach(GameObject but in buttons_SecondSet)
             { but.SetActive(false); }
             //buttons_SecondSet[0].gameObject.SetActive(false);
             //buttons_SecondSet[0].SetActive(false);
             //buttons_SecondSet[]
->>>>>>> master2
-=======
 
->>>>>>> 9a87d8f6950b01af00c2853ad8956e276ea717b6
             enter = true;
         }
 
