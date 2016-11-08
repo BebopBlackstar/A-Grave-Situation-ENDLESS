@@ -191,6 +191,7 @@ public class PlayerCont : Seeable
             Physics.IgnoreCollision(go.GetComponent<Collider>(), GetComponent<Collider>(), true);
             Vector3 force = (transform.forward + (transform.up / arkAmount)).normalized;
             float throwAmount = Mathf.Clamp((Time.time - timeHeld) * throwSpeed, 0, maxThrowForce);
+            Rigidbody asdf = go.GetComponent<Rigidbody>();
             go.GetComponent<Rigidbody>().AddForce(force * throwAmount);
             go.GetComponent<Rigidbody>().AddForce((movement.normalized * throwAmount) / moveThrow);
             StopCoroutine(lineDraw);
@@ -236,7 +237,7 @@ public class PlayerCont : Seeable
                     drained = true;
                 }
 
-               
+
 
 
             }
