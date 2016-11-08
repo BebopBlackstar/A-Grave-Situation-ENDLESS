@@ -4,17 +4,17 @@
     <playerStats>
       <name>Player1</name>
       <money>2000</money>
-      <lvl>1</lvl>
+      <lvl>2</lvl>
     </playerStats>
     <playerStats>
       <name>Player2</name>
       <money>5</money>
-      <lvl>1</lvl>
+      <lvl>2</lvl>
     </playerStats>
     <playerStats>
       <name>Player3</name>
       <money>5</money>
-      <lvl>1</lvl>
+      <lvl>2</lvl>
     </playerStats>
   </saveslots>
 </saves>

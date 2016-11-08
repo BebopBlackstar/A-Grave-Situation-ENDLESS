@@ -17,9 +17,9 @@ public class saves //Save files and games data.
     public saves()
     {
         saveslots = new List<playerStats>(m_saveSlots);
-        saveslots.Add(new playerStats("Player1", 5, 1));
-        saveslots.Add(new playerStats("Player2", 5, 1));
-        saveslots.Add(new playerStats("Player3", 5, 1));
+        saveslots.Add(new playerStats("Player1", 5, 2));
+        saveslots.Add(new playerStats("Player2", 5, 2));
+        saveslots.Add(new playerStats("Player3", 5, 2));
     }
 }
 public class playerStats
@@ -60,10 +60,12 @@ public class MenuSystem : MonoBehaviour
     public Scene scenes;
     public int Checktest = 3;
     int num_CurrentSlot = 0;
-    int levelCount = 0;
+    public int levelCount = 0;
     saves stats;
     public int moneyCurrent = 2000;
     public string myName = "Default";
+    public bool isMainMenu = false;
+
 
     public List<GameObject> buttons_FirstSet = new List<GameObject>();
     public List<GameObject> buttons_SecondSet = new List<GameObject>();
@@ -111,6 +113,11 @@ public class MenuSystem : MonoBehaviour
         {
             foreach (GameObject but in buttons_FirstSet)
             { but.SetActive(false); }
+//<<<<<<< HEAD
+            buttons_SecondSet[0].gameObject.SetActive(true);
+//=======
+            buttons_SecondSet[0].SetActive(true);
+//>>>>>>> 11b62b4153a5a73ae465d1c3bcae2aa5dfa87580
             enter = false;
         }
 
@@ -245,7 +252,7 @@ public class MenuSystem : MonoBehaviour
         {
             if (enter == false)
             { exit = true; command = ""; }
-            else
+            else if(levelCount != 0)
             {
                 SceneManager.LoadScene(levelCount);
                 Time.timeScale = 1;
@@ -280,6 +287,11 @@ public class MenuSystem : MonoBehaviour
 
             foreach (GameObject but in buttons_FirstSet)
             { but.SetActive(true); }
+//<<<<<<< HEAD
+            buttons_SecondSet[0].gameObject.SetActive(false);
+//=======
+            buttons_SecondSet[0].SetActive(false);
+//>>>>>>> 11b62b4153a5a73ae465d1c3bcae2aa5dfa87580
             enter = true;
         }
 

@@ -46,7 +46,7 @@ public class diggable : Seeable
             {
                 complete = true;
                 Camera.main.GetComponent<CameraFollow>().reset();
-                Input.GetAxis("breakthatshit");
+                Input.GetAxis("Axis breaker!");
             }
             else
             {
@@ -55,7 +55,7 @@ public class diggable : Seeable
                 graveTop.position = new Vector3(graveTop.position.x, graveTop.position.y - digSpeed, graveTop.position.z);
                 percentComplete = Mathf.Floor(completion / dropDistance * 100);
             }
-            if (!player.GetComponent<AudioSource>().isPlaying)
+            if (player.GetComponent<PlayerCont>().digSound != null && !player.GetComponent<AudioSource>().isPlaying)
             {
                 player.GetComponent<AudioSource>().clip = player.GetComponent<PlayerCont>().digSound;
                 player.GetComponent<AudioSource>().Play();

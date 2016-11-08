@@ -44,6 +44,10 @@ public class PlayerCont : Seeable
     [Tooltip("Speed after sprint without stamina")]
     public float noStaminaSpeed;
 
+    /// <Michael gameobject main menu linking>
+    public GameObject isMainMenuActive;
+    /// <Michael gameobject main menu linking>
+
 
     float maxStamina;
     bool drained = false;
@@ -104,8 +108,13 @@ public class PlayerCont : Seeable
         }
         else if (Input.GetButtonDown("Jump") && triggerObject.tag == "DropOff" && body.activeSelf == true)
         {
-            GetComponent<AudioSource>().clip = dropSound;
-            GetComponent<AudioSource>().Play();
+            if (dropSound != null)
+            {
+                GetComponent<AudioSource>().clip = dropSound;
+                GetComponent<AudioSource>().Play();
+            }
+
+
             moneh += carryMoneh;
             carryMoneh = 0;
             moveSpeed = carrySpeed;
@@ -148,11 +157,23 @@ public class PlayerCont : Seeable
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (isMainMenuActive != null) //Michael main menu activation code/pause
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && !isMainMenuActive.activeSelf)
+            { Time.timeScale = 0; isMainMenuActive.SetActive(true); }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Time.timeScale = 1;
+                isMainMenuActive.SetActive(false);
+                //SceneManager.LoadScene(0);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
         {
             Time.timeScale = 0;
             SceneManager.LoadScene(0);
-        }
+        } //Michael main menu activation code/pause
+
         moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         moveDirection = m_camera.TransformDirection(moveDirection);
         moveDirection.y *= 0;
@@ -274,7 +295,8 @@ public class PlayerCont : Seeable
         if (moveDirection.magnitude > 0)
         {
             transform.rotation = Quaternion.Lerp(Quaternion.LookRotation(moveDirection), transform.rotation, turnSpeed);
-            if (!GetComponent<AudioSource>().isPlaying)
+
+            if (moveSound != null && !GetComponent<AudioSource>().isPlaying)
             {
                 GetComponent<AudioSource>().clip = moveSound;
                 GetComponent<AudioSource>().Play();
