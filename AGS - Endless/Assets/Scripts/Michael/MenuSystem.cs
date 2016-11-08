@@ -113,11 +113,16 @@ public class MenuSystem : MonoBehaviour
         {
             foreach (GameObject but in buttons_FirstSet)
             { but.SetActive(false); }
+<<<<<<< HEAD
+            buttons_SecondSet[0].gameObject.SetActive(true);
+            buttons_SecondSet[0].SetActive(true);
+=======
 //<<<<<<< HEAD
             buttons_SecondSet[0].gameObject.SetActive(true);
 //=======
             buttons_SecondSet[0].SetActive(true);
 //>>>>>>> 11b62b4153a5a73ae465d1c3bcae2aa5dfa87580
+>>>>>>> e953d1527fdb42783727373fb0061e4dd12f2fb6
             enter = false;
         }
 
@@ -287,11 +292,16 @@ public class MenuSystem : MonoBehaviour
 
             foreach (GameObject but in buttons_FirstSet)
             { but.SetActive(true); }
+<<<<<<< HEAD
+            buttons_SecondSet[0].gameObject.SetActive(false);
+            buttons_SecondSet[0].SetActive(false);
+=======
 //<<<<<<< HEAD
             buttons_SecondSet[0].gameObject.SetActive(false);
 //=======
             buttons_SecondSet[0].SetActive(false);
 //>>>>>>> 11b62b4153a5a73ae465d1c3bcae2aa5dfa87580
+>>>>>>> e953d1527fdb42783727373fb0061e4dd12f2fb6
             enter = true;
         }
 
