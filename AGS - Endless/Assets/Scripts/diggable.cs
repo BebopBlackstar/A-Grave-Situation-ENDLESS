@@ -46,7 +46,7 @@ public class diggable : Seeable
             {
                 complete = true;
                 Camera.main.GetComponent<CameraFollow>().reset();
-                Input.GetAxis("breakthatshit");
+                Input.GetAxis("Axis breaker!");
             }
             else
             {
