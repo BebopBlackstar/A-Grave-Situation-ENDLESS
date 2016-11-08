@@ -75,23 +75,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CoinGrab.cs" />
     <Compile Include="Assets\LazyFog\Scripts\exampleSceneScript.cs" />
-    <Compile Include="Assets\Money.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\CoinGrab.cs" />
     <Compile Include="Assets\Scripts\FieldOfViewEditor.cs" />
     <Compile Include="Assets\Scripts\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\Michael\MenuSystem.cs" />
+    <Compile Include="Assets\Scripts\Money.cs" />
     <Compile Include="Assets\Scripts\MoveToNewIntersection.cs" />
+    <Compile Include="Assets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\PlayerCont.cs" />
     <Compile Include="Assets\Scripts\Seeable.cs" />
+    <Compile Include="Assets\Scripts\StaminaBar.cs" />
     <Compile Include="Assets\Scripts\VolumetricLight.cs" />
     <Compile Include="Assets\Scripts\VolumetricLightRenderer.cs" />
+    <Compile Include="Assets\Scripts\clock.cs" />
     <Compile Include="Assets\Scripts\diggable.cs" />
     <Compile Include="Assets\Scripts\fieldOfView.cs" />
     <Compile Include="Assets\Scripts\graveText.cs" />
-    <Compile Include="Assets\StaminaBar.cs" />
-    <Compile Include="Assets\clock.cs" />
+    <Compile Include="Assets\Scripts\objective.cs" />
+    <Compile Include="Assets\mainMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Day-Night Skyboxes\Textures\Readme for Assigning.txt" />

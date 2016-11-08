@@ -44,9 +44,9 @@ public class PlayerCont : Seeable
     [Tooltip("Speed after sprint without stamina")]
     public float noStaminaSpeed;
 
-    /// <Michael gameobject main menu linking>
-    public GameObject isMainMenuActive;
-    /// <Michael gameobject main menu linking>
+    ///// <Michael gameobject main menu linking>
+    //public GameObject isMainMenuActive;
+    ///// <Michael gameobject main menu linking>
 
 
     float maxStamina;
@@ -113,8 +113,7 @@ public class PlayerCont : Seeable
                 GetComponent<AudioSource>().clip = dropSound;
                 GetComponent<AudioSource>().Play();
             }
-
-
+            GameObject.FindGameObjectWithTag("Objective").SendMessage("Increment");
             moneh += carryMoneh;
             carryMoneh = 0;
             moveSpeed = carrySpeed;
@@ -157,22 +156,22 @@ public class PlayerCont : Seeable
     // Update is called once per frame
     void Update()
     {
-        if (isMainMenuActive != null) //Michael main menu activation code/pause
-        {
-            if (Input.GetKeyDown(KeyCode.Escape) && !isMainMenuActive.activeSelf)
-            { Time.timeScale = 0; isMainMenuActive.SetActive(true); }
-            else if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Time.timeScale = 1;
-                isMainMenuActive.SetActive(false);
-                //SceneManager.LoadScene(0);
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Time.timeScale = 0;
-            SceneManager.LoadScene(0);
-        } //Michael main menu activation code/pause
+        //if (isMainMenuActive != null) //Michael main menu activation code/pause
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Escape) && !isMainMenuActive.activeSelf)
+        //    { Time.timeScale = 0; isMainMenuActive.SetActive(true); }
+        //    else if (Input.GetKeyDown(KeyCode.Escape))
+        //    {
+        //        Time.timeScale = 1;
+        //        isMainMenuActive.SetActive(false);
+        //        //SceneManager.LoadScene(0);
+        //    }
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    Time.timeScale = 0;
+        //    SceneManager.LoadScene(0);
+        //} //Michael main menu activation code/pause
 
         moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         moveDirection = m_camera.TransformDirection(moveDirection);
