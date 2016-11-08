@@ -75,7 +75,7 @@ public class MenuSystem : MonoBehaviour
     public bool comGo = false;
 
     bool enter = true;
-    bool exit = false;
+    //bool exit = false;
     //public List<Button> new_Off = new List<Button>();
     //public List<Button> save_Off = new List<Button>();
     //public List<Button> load_Off = new List<Button>();
@@ -113,28 +113,22 @@ public class MenuSystem : MonoBehaviour
         {
             foreach (GameObject but in buttons_FirstSet)
             { but.SetActive(false); }
-<<<<<<< HEAD
-            buttons_SecondSet[0].gameObject.SetActive(true);
-            buttons_SecondSet[0].SetActive(true);
-=======
-//<<<<<<< HEAD
-            buttons_SecondSet[0].gameObject.SetActive(true);
-//=======
-            buttons_SecondSet[0].SetActive(true);
-//>>>>>>> 11b62b4153a5a73ae465d1c3bcae2aa5dfa87580
->>>>>>> e953d1527fdb42783727373fb0061e4dd12f2fb6
-            enter = false;
+
         }
 
         if(slotSelect != 0)
         {
             num_CurrentSlot = slotSelect - 1;
+            //Time.timeScale = 1;
             if (command.Contains("new"))
             {
                
                 stats.saveslots[slotSelect] = new playerStats(myName);
                 levelCount = 5;
+                //Time.timeScale = 1;
+                Time.timeScale = 1;
                 SceneManager.LoadScene(levelCount);
+
             }
             if (command.Contains("save"))
             {
@@ -153,6 +147,7 @@ public class MenuSystem : MonoBehaviour
                 levelCount = stats.saveslots[num_CurrentSlot].lvl;
                 moneyCurrent = stats.saveslots[num_CurrentSlot].money;
                 myName = stats.saveslots[num_CurrentSlot].name;
+                Time.timeScale = 1;
                 SceneManager.LoadScene(levelCount);
             }
         }
@@ -160,56 +155,44 @@ public class MenuSystem : MonoBehaviour
 
 
     }
- //////public void newGame() //load up the first level for training
- //////   {
- //////       stats.saveslots[num_CurrentSlot] = new playerStats(myName);
- //////       levelCount = 5;
- //////       SceneManager.LoadScene(levelCount);
- //////   }
- //////   public void saveGame()
- //////   {
- //////       // stats.saveslots[num_CurrentSlot] = new playerStats(lvl)
- //////       stats.saveslots[num_CurrentSlot] = new playerStats(myName, moneyCurrent, levelCount);
- //////       {//SAVE GAME
- //////           System.Type type = typeof(saves);
- //////           XmlSerializer serilizer = new XmlSerializer(type);
- //////           StreamWriter writer = new StreamWriter("../ProfileInfomation");
- //////           Debug.Log("Writing Information");
- //////           serilizer.Serialize(writer, stats);
- //////           writer.Close();
- //////       }//SAVE GAME
- //////   }
 
- //////   public void loadGame()
- //////   {
- //////       //stats.saveslots[num_CurrentSlot](myName, moneyCurrent, levelCount);
- //////       levelCount = stats.saveslots[num_CurrentSlot].lvl;
- //////       moneyCurrent = stats.saveslots[num_CurrentSlot].money;
- //////       myName = stats.saveslots[num_CurrentSlot].name;
- //////       SceneManager.LoadScene(levelCount);
-
- //////       //info.AddValue("GameSlot: ", (num_loadGame));
- //////       //info.AddValue("foundGem1", (foundGem1));
- //////       //info.AddValue("SaveMoney: ", moneyCurrent);
- //////       //info.AddValue("CurrentLevel: ", levelCount);
- //////   }
-
-    //public void nextLevel(SerializationInfo info, StreamingContext ctxt)
-    //{
-    //    info.AddValue("GameSlot: ", (num_loadGame));
-    //    info.AddValue("foundGem1", (foundGem1));
-    //    info.AddValue("SaveMoney: ", moneyCurrent);
-    //    info.AddValue("CurrentLevel: ", levelCount);
-    //}
 
     public void leaderboards()
-    { }
+    {
+        Debug.Log("Leaderboards called.");
+        if (enter)
+        {
+            foreach (GameObject but in buttons_FirstSet)
+            { but.SetActive(false); }
+            buttons_SecondSet[1].gameObject.SetActive(true);
+            buttons_SecondSet[1].SetActive(true);
+            enter = false;
+        }
+    }
 
     public void options()
-    { }
+    {
+        if (enter)
+        {
+            foreach (GameObject but in buttons_FirstSet)
+            { but.SetActive(false); }
+            buttons_SecondSet[2].gameObject.SetActive(true);
+            buttons_SecondSet[2].SetActive(true);
+            enter = false;
+        }
+    }
 
     public void credits()
-    { }
+    {
+        if (enter)
+        {
+            foreach (GameObject but in buttons_FirstSet)
+            { but.SetActive(false); }
+            buttons_SecondSet[3].gameObject.SetActive(true);
+            buttons_SecondSet[3].SetActive(true);
+            enter = false;
+        } //DEFAULT Load new buttons and unload old from first and second.
+    }
 
     public void quit()
     {
@@ -256,7 +239,7 @@ public class MenuSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (enter == false)
-            { exit = true; command = ""; }
+            { command = ""; }
             else if(levelCount != 0)
             {
                 SceneManager.LoadScene(levelCount);
@@ -285,6 +268,14 @@ public class MenuSystem : MonoBehaviour
                 if (firstSet[i] == firstSet[3])
                 { command = "slots/load"; } //"slots/load
             }
+            if(command.Contains(firstSet[5]))
+            { leaderboards(); }
+            if(command.Contains(firstSet[4]))
+            { options(); }
+            if (command.Contains(firstSet[6]))
+            { credits(); }
+
+            //Initilize functions to load up a new screen or infomation to the game.
             comGo = true;
         }
         else if (buttons_FirstSet[3].activeInHierarchy != true && command == "")
@@ -292,6 +283,8 @@ public class MenuSystem : MonoBehaviour
 
             foreach (GameObject but in buttons_FirstSet)
             { but.SetActive(true); }
+<<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD
             buttons_SecondSet[0].gameObject.SetActive(false);
             buttons_SecondSet[0].SetActive(false);
@@ -302,6 +295,17 @@ public class MenuSystem : MonoBehaviour
             buttons_SecondSet[0].SetActive(false);
 //>>>>>>> 11b62b4153a5a73ae465d1c3bcae2aa5dfa87580
 >>>>>>> e953d1527fdb42783727373fb0061e4dd12f2fb6
+=======
+
+            foreach(GameObject but in buttons_SecondSet)
+            { but.SetActive(false); }
+            //buttons_SecondSet[0].gameObject.SetActive(false);
+            //buttons_SecondSet[0].SetActive(false);
+            //buttons_SecondSet[]
+>>>>>>> master2
+=======
+
+>>>>>>> 9a87d8f6950b01af00c2853ad8956e276ea717b6
             enter = true;
         }
 
@@ -316,7 +320,55 @@ public class MenuSystem : MonoBehaviour
         {
             slots(0);
         }
-
+        
 
     }
 }
+
+
+
+
+
+
+
+//////public void newGame() //load up the first level for training
+//////   {
+//////       stats.saveslots[num_CurrentSlot] = new playerStats(myName);
+//////       levelCount = 5;
+//////       SceneManager.LoadScene(levelCount);
+//////   }
+//////   public void saveGame()
+//////   {
+//////       // stats.saveslots[num_CurrentSlot] = new playerStats(lvl)
+//////       stats.saveslots[num_CurrentSlot] = new playerStats(myName, moneyCurrent, levelCount);
+//////       {//SAVE GAME
+//////           System.Type type = typeof(saves);
+//////           XmlSerializer serilizer = new XmlSerializer(type);
+//////           StreamWriter writer = new StreamWriter("../ProfileInfomation");
+//////           Debug.Log("Writing Information");
+//////           serilizer.Serialize(writer, stats);
+//////           writer.Close();
+//////       }//SAVE GAME
+//////   }
+
+//////   public void loadGame()
+//////   {
+//////       //stats.saveslots[num_CurrentSlot](myName, moneyCurrent, levelCount);
+//////       levelCount = stats.saveslots[num_CurrentSlot].lvl;
+//////       moneyCurrent = stats.saveslots[num_CurrentSlot].money;
+//////       myName = stats.saveslots[num_CurrentSlot].name;
+//////       SceneManager.LoadScene(levelCount);
+
+//////       //info.AddValue("GameSlot: ", (num_loadGame));
+//////       //info.AddValue("foundGem1", (foundGem1));
+//////       //info.AddValue("SaveMoney: ", moneyCurrent);
+//////       //info.AddValue("CurrentLevel: ", levelCount);
+//////   }
+
+//public void nextLevel(SerializationInfo info, StreamingContext ctxt)
+//{
+//    info.AddValue("GameSlot: ", (num_loadGame));
+//    info.AddValue("foundGem1", (foundGem1));
+//    info.AddValue("SaveMoney: ", moneyCurrent);
+//    info.AddValue("CurrentLevel: ", levelCount);
+//}
